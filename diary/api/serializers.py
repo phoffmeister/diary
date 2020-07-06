@@ -39,7 +39,7 @@ class PhotoEntrySerializer(serializers.ModelSerializer):
 class DaySerializer(serializers.ModelSerializer):
     class Meta:
         model = EntryCollection
-        fields = ('id', 'date', 'texts', 'drinks', 'medications')
+        fields = ('id', 'date', 'texts', 'drinks', 'medications', 'photos')
 
     class SimpleTextS(serializers.ModelSerializer):
         class Meta:
@@ -58,6 +58,13 @@ class DaySerializer(serializers.ModelSerializer):
             fields = ('id', 'medication', 'amount', 'time')
             depth = 1
 
+    class SimplePhotoEntryS(serializers.ModelSerializer):
+        photo = serializers.FileField(use_url=False)
+        class Meta:
+            model = PhotoEntry
+            fields = ('id', 'photo', 'caption')
+
     texts = SimpleTextS(many=True, read_only=True)
     drinks = SimpleDrinkS(many=True, read_only=True)
     medications = SimpleMedicationS(many=True, read_only=True)
+    photos = SimplePhotoEntryS(many=True, read_only=True)

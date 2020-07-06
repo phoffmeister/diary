@@ -1,8 +1,40 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../actions/auth';
 
-export default class Header extends Component {
+class Header extends Component {
+static propTypes = {
+    auth: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
+  };
     render() {
+      const { isAuthenticated, user } = this.props.auth;
+
+      const authLinks = (
+        <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+          <span className="navbar-text mr-3">
+            <strong>{user ? `Welcome ${user.username}` : ''}</strong>
+          </span>
+          <li className="nav-item">
+            <button onClick={this.props.logout} className="nav-link btn btn-info btn-sm text-light">
+              Logout
+            </button>
+          </li>
+        </ul>
+      );
+  const guestLinks = (
+        <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li className="nav-item">
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+          </li>
+        </ul>
+      );
         return (
+          <div className="container">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="#">
                     Navbar
@@ -24,8 +56,16 @@ export default class Header extends Component {
                             Home <span className="sr-only">(current)</span>
                         </a>
                     </div>
+          {isAuthenticated ? authLinks : guestLinks}
                 </div>
             </nav>
+          </div>
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(Header);

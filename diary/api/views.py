@@ -56,7 +56,7 @@ class DayAPI(
     serializer_class = DaySerializer
 
     def get_queryset(self):
-        return self.request.user.collections.all()
+            return self.request.user.collections.all()
 
 class EntryCollectionViewSet(
         mixins.CreateModelMixin,
@@ -70,7 +70,7 @@ class EntryCollectionViewSet(
     serializer_class = EntryCollectionSerializer
 
     def get_queryset(self):
-        return self.request.user.collections.all().order_by('date')
+        return self.request.user.collections.all().order_by('-date')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
