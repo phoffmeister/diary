@@ -136,7 +136,6 @@ class PhotoEntryViewSet(
         return queryset
 
     def perform_create(self, serializer):
-        print('i am called')
         serializer.save(owner=self.request.user)
 
 class MedicationEntryViewSet(
