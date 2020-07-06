@@ -1,22 +1,12 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import EntryCollection, TextEntry, DrinkEntry, MedicationEntry
+from .models import EntryCollection, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
-
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField()
-
-    def validate(self, data):
-        user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Incorrect Credentials")
 
 class EntryCollectionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,6 +29,12 @@ class MedicationEntrySerializer(serializers.ModelSerializer):
         model = MedicationEntry
         fields = ('id', 'medication', 'amount', 'time', 'collection')
         depth = 1
+
+class PhotoEntrySerializer(serializers.ModelSerializer):
+    photo = serializers.FileField(use_url=False)
+    class Meta:
+        model = PhotoEntry
+        fields = ('id', 'photo', 'caption', 'collection')
 
 class DaySerializer(serializers.ModelSerializer):
     class Meta:
