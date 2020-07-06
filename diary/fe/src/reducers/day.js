@@ -4,6 +4,8 @@ const initialState = {
   day: {
     texts:[],
     medications:[],
+    drinks:[],
+    photos:[],
   },
 }
 

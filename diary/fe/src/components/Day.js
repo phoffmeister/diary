@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { getDay } from '../actions/day'
 import { matchPath } from "react-router-dom";
 import TextEntries from './TextEntries';
+import DrinkEntries from './DrinkEntries';
+import PhotoEntries from './PhotoEntries';
 import MedicationEntries from './MedicationEntries';
 
 class Day extends Component {
@@ -24,6 +26,8 @@ class Day extends Component {
       <h1>Entries from {this.props.day.date}</h1>
       <TextEntries texts={this.props.day.texts} />
       <MedicationEntries medications={this.props.day.medications} />
+      <DrinkEntries drinks={this.props.day.drinks} />
+      <PhotoEntries photos={this.props.day.photos} />
       </div>
       </Fragment>
     );
