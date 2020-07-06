@@ -6,6 +6,13 @@ A Diary built with Django and React.
 # Install Python deps
 pipenv install
 
+# deal with migrations
+pipenv run python diary/manage.py makemigrations api fe
+pipenv run python diary/manage.py migrate
+
+# create a superuser
+pipenv run python diary/manage.py createsuperuser
+
 # Install js deps
 yarn install
 ```
