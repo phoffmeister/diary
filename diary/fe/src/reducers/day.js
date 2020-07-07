@@ -2,6 +2,8 @@ import { GET_DAY } from "../actions/types";
 
 const initialState = {
   day: {
+    date:"",
+    id:0,
     texts:[],
     medications:[],
     drinks:[],
