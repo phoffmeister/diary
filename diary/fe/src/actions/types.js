@@ -1,5 +1,6 @@
 export const GET_DAY = "GET_DAY";
 export const GET_COLLECTIONS = "GET_COLLECTIONS";
+export const CREATE_COLLECTION = "CREATE_COLLECTION";
 
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';
@@ -9,3 +10,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
+
+export const SELECT_DATE = 'SELECT_DATE';

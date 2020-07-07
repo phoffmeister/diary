@@ -2,12 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { matchPath, Link } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faCapsules, faCocktail, faCamera } from '@fortawesome/free-solid-svg-icons'
 
 
-import { getCollections } from '../actions/collections'
+import { selectDate, getCollections, createCollection } from '../actions/collections'
 
 class CollectionListItem extends Component {
   render() {
@@ -36,6 +38,14 @@ class CollectionList extends Component {
     return (
       <div className="container">
       <h1>There are {this.props.collections.length} entries in your diary!</h1>
+      <div>
+        <DatePicker selected={this.props.date} onChange={date => this.props.selectDate(date)}/>
+        <button
+          className="btn btn-sm btn-primary ml-2"
+          onClick={() => this.props.createCollection(this.props.date)} >
+          Create new
+        </button>
+      </div>
       <ul>
       {
         this.props.collections.map((col) => <CollectionListItem key={col.id} data={col}/> )
@@ -48,6 +58,7 @@ class CollectionList extends Component {
 
 const mapStateToProps = state => ({
   collections: state.collections.collections,
+  date: state.collections.date,
 });
 
-export default connect(mapStateToProps, { getCollections })(CollectionList);
+export default connect(mapStateToProps, { getCollections, selectDate, createCollection })(CollectionList);
