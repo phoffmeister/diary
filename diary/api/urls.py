@@ -1,6 +1,6 @@
 from rest_framework import routers
 from django.urls import path, include, re_path
-from .views import LoginAPI, UserAPI, EntryCollectionViewSet, TextEntryViewSet, DrinkEntryViewSet, DayAPI, MedicationEntryViewSet, PhotoEntryViewSet, protected_media
+from .views import LoginAPI, UserAPI, EntryCollectionViewSet, TextEntryViewSet, DrinkEntryViewSet, DayAPI, MedicationEntryViewSet, PhotoEntryViewSet, protected_media, MedicationOptionsAPI
 from knox import views as knox_views
 
 router = routers.DefaultRouter()
@@ -13,6 +13,7 @@ router.register('api/photo', PhotoEntryViewSet, 'photo')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('api/opts/medication/', MedicationOptionsAPI.as_view()),
     path('api/auth/login/', LoginAPI.as_view()),
     path('api/auth/user/', UserAPI.as_view()),
     path('api/auth/logout/', knox_views.LogoutView.as_view(), name='knox_logout'),

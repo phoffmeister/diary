@@ -1,4 +1,4 @@
-from .models import PhotoEntry
+from .models import PhotoEntry, MedicationAmount, Medication
 from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,6 +8,7 @@ from knox.models import AuthToken
 from rest_framework import generics, permissions, viewsets, mixins, status
 from rest_framework.decorators import authentication_classes, permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -56,7 +57,17 @@ class DayAPI(
     serializer_class = DaySerializer
 
     def get_queryset(self):
-            return self.request.user.collections.all()
+        return self.request.user.collections.all()
+
+class MedicationOptionsAPI(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get(self, request, format=None):
+        amounts = [{"id":a.id, "amount":a.amount} for a in MedicationAmount.objects.all()]
+        active_ingredients = [{"id":i.id, "ingredient":i.active_ingredient} for i in Medication.objects.all()]
+        return Response({"amounts":amounts,"active_ingredients": active_ingredients})
 
 class EntryCollectionViewSet(
         mixins.CreateModelMixin,
