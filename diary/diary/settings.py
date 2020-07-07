@@ -45,6 +45,9 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
 }
 
 MIDDLEWARE = [
@@ -128,4 +131,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'protected')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
