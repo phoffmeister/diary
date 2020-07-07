@@ -20,7 +20,16 @@ class Day extends Component {
   }
 
   render() {
-    const createButtons = <div className="mb-2"><Link to={`/create/text/${this.props.day.id}/`}><button className="btn btn-primary btn-sm">Add Text</button></Link></div>
+    const createButtons = (
+        <div className="mb-2">
+        <Link to={`/create/text/${this.props.day.id}/`}>
+        <button className="btn btn-primary btn-sm mr-1">Add Text</button>
+        </Link>
+        <Link to={`/create/medication/${this.props.day.id}/`}>
+        <button className="btn btn-primary btn-sm mr-1">Add Medication</button>
+        </Link>
+        </div>
+    )
     return (
       <Fragment>
       <div className="container mt-2">

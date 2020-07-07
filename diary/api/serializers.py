@@ -22,13 +22,11 @@ class DrinkEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = DrinkEntry
         fields = ('id', 'name', 'amount', 'time', 'collection')
-        depth = 2
 
 class MedicationEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = MedicationEntry
         fields = ('id', 'medication', 'amount', 'time', 'collection')
-        depth = 1
 
 class PhotoEntrySerializer(serializers.ModelSerializer):
     photo = serializers.FileField(use_url=False)
@@ -68,3 +66,4 @@ class DaySerializer(serializers.ModelSerializer):
     drinks = SimpleDrinkS(many=True, read_only=True)
     medications = SimpleMedicationS(many=True, read_only=True)
     photos = SimplePhotoEntryS(many=True, read_only=True)
+

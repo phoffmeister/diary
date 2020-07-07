@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
-import day from './day';
 import auth from './auth';
-import messages from './messages';
 import collections from './collections';
+import day from './day';
+import medication from './medication';
+import messages from './messages';
 
 export default combineReducers({
-  day,
-  messages,
+  auth,
   collections,
-  auth
+  day,
+  medication,
+  messages,
 });

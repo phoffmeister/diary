@@ -1,6 +1,7 @@
 import CollectionList from './CollectionList';
 import Day from './Day';
 import CreateText from './CreateText';
+import CreateMedication from './CreateMedication';
 import Header from './Header';
 import Login from './Login';
 import PrivateRoute from './PrivateRoute';
@@ -23,6 +24,7 @@ export default class App extends Component {
             <PrivateRoute exact path="/" component={CollectionList} />
             <PrivateRoute path="/day/" component={Day}/>
             <PrivateRoute path="/create/text/" component={CreateText}/>
+            <PrivateRoute path="/create/medication/" component={CreateMedication}/>
             <Route exact path="/login" component={Login} />
           </Switch>
           </Router>
