@@ -22,8 +22,7 @@ class CreateText extends Component {
     this.props.createText({
       collection: this.props.collection.id,
       text: this.state.text,
-    });
-    this.props.history.push(`/day/${this.props.collection.id}/`);
+    }, this.props.history);
   }
 
   render() {
