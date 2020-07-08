@@ -25,6 +25,9 @@ class Day extends Component {
         <Link to={`/create/text/${this.props.day.id}/`}>
         <button className="btn btn-primary btn-sm mr-1">Add Text</button>
         </Link>
+        <Link to={`/create/drink/${this.props.day.id}/`}>
+        <button className="btn btn-primary btn-sm mr-1">Add Drink</button>
+        </Link>
         <Link to={`/create/medication/${this.props.day.id}/`}>
         <button className="btn btn-primary btn-sm mr-1">Add Medication</button>
         </Link>

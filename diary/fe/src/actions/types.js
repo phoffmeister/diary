@@ -1,6 +1,7 @@
 export const GET_DAY = "GET_DAY";
 export const GET_COLLECTIONS = "GET_COLLECTIONS";
 export const GET_MEDICATION_OPTS = "GET_MEDICATION_OPTS";
+export const GET_DRINK_OPTS = "GET_DRINK_OPTS";
 export const CREATE_COLLECTION = "CREATE_COLLECTION";
 
 export const USER_LOADING = 'USER_LOADING';

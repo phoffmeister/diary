@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { createMessage, returnErrors } from './messages';
 import { tokenConfig } from './auth';
 import { GET_MEDICATION_OPTS } from './types';
 
@@ -12,7 +11,7 @@ export const getMedicationOpts = () => (dispatch, getState) => {
         payload: res.data
       });
     })
-    .catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
+    .catch((err) => console.log(err));
 }
 
 export const createMedication = (medicationEntry, history) => (dispatch, getState) => {
