@@ -1,4 +1,4 @@
-from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount
+from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, EntryCollection
 from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -9,6 +9,7 @@ from rest_framework import generics, permissions, viewsets, mixins, status
 from rest_framework.decorators import authentication_classes, permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -101,6 +102,11 @@ class EntryCollectionViewSet(
         return self.request.user.collections.all().order_by('-date')
 
     def perform_create(self, serializer):
+        coll = EntryCollection.objects.filter(
+                date=serializer.validated_data['date'],
+                owner=self.request.user).exists()
+        if coll:
+            raise ValidationError('There is already an entry for this date.')
         serializer.save(owner=self.request.user)
 
 class TextEntryViewSet(
