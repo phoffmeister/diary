@@ -65,9 +65,9 @@ class MedicationOptionsAPI(APIView):
     ]
 
     def get(self, request, format=None):
-        amounts = [{"id":a.id, "amount":a.amount} for a in MedicationAmount.objects.all()]
-        active_ingredients = [{"id":i.id, "ingredient":i.active_ingredient} for i in Medication.objects.all()]
-        return Response({"amounts":amounts,"active_ingredients": active_ingredients})
+        amounts = [{"id":a.id, "amount":a.amount} for a in MedicationAmount.objects.all().order_by('amount')]
+        names = [{"id":i.id, "name":i.name } for i in Medication.objects.all().order_by('name')]
+        return Response({"amounts":amounts,"names": names})
 
 class EntryCollectionViewSet(
         mixins.CreateModelMixin,

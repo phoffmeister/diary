@@ -57,10 +57,10 @@ class MedicationAmount(models.Model):
 
 
 class Medication(models.Model):
-    active_ingredient = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
-        return str(self.active_ingredient)
+        return str(self.name)
 
 
 class MedicationEntry(models.Model):

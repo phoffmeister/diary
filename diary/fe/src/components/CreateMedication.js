@@ -9,8 +9,8 @@ class CreateMedication extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        active_ingredient: 0,
-        amount: 0,
+        nameId: 0,
+        amountId: 0,
         time:new Date(),
     };
   }
@@ -23,8 +23,8 @@ class CreateMedication extends Component {
 
   handleClick(event) {
     this.props.createMedication({
-        medication: this.state.active_ingredient,
-        amount: this.state.amount,
+        medication: this.state.nameId,
+        amount: this.state.amountId,
         collection: this.props.collection.id,
         time: `${this.state.time.getHours()}:${this.state.time.getMinutes()}`,
     }, this.props.history);
@@ -50,19 +50,19 @@ class CreateMedication extends Component {
         Drug:
         <select 
             onChange={(e) => this.handleInputChange(e)} 
-            value={this.state.active_ingredient}
-            name="active_ingredient">
+            value={this.state.nameId}
+            name="nameId">
             <option value="0">---</option>
-        {this.props.medicationOpts.active_ingredients.map((opts) => 
-            <option key={opts.id} value={opts.id}>{opts.ingredient}</option>
+        {this.props.medicationOpts.names.map((opts) => 
+            <option key={opts.id} value={opts.id}>{opts.name}</option>
         )}
         </select>
         </label>
         <label>
         Amount:
         <select onChange={(e) => this.handleInputChange(e)} 
-            value={this.state.amount}
-            name="amount">
+            value={this.state.amountId}
+            name="amountId">
             <option value="0">---</option>
         {this.props.medicationOpts.amounts.map((opts) => 
             <option key={opts.id} value={opts.id}>{opts.amount}</option>

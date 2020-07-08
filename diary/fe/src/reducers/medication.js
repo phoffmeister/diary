@@ -4,7 +4,7 @@ import { GET_MEDICATION_OPTS } from "../actions/types";
 const initialState = {
   opts: {
       amounts: [],
-      active_ingredients: [],
+      names: [],
   },
 }
 
