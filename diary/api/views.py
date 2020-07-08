@@ -1,4 +1,4 @@
-from .models import PhotoEntry, MedicationAmount, Medication
+from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount
 from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -68,6 +68,23 @@ class MedicationOptionsAPI(APIView):
         amounts = [{"id":a.id, "amount":a.amount} for a in MedicationAmount.objects.all().order_by('amount')]
         names = [{"id":i.id, "name":i.name } for i in Medication.objects.all().order_by('name')]
         return Response({"amounts":amounts,"names": names})
+
+class DrinkOptionsAPI(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get(self, request, format=None):
+        types = [
+                    {"id":a.id, "name":a.name, "tags":
+                        [
+                            {t.tag_text} for t in a.tag.all()
+                        ]
+                    }
+                    for a in DrinkType.objects.all()
+                ]
+        amounts = [{"id":a.id, "amount":a.amount, "examples":[ex.example for ex in a.examples.all()]} for a in DrinkAmount.objects.all().order_by('amount')]
+        return Response({"amounts":amounts,"types": types})
 
 class EntryCollectionViewSet(
         mixins.CreateModelMixin,

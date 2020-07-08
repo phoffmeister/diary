@@ -113,7 +113,7 @@ class DrinkAmount(models.Model):
 
 class DrinkAmountExample(models.Model):
     example = models.CharField(max_length=100)
-    drink_amount = models.ForeignKey(DrinkAmount, on_delete=models.CASCADE)
+    drink_amount = models.ForeignKey(DrinkAmount, related_name='examples', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.example
