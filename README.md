@@ -1,6 +1,12 @@
 # The Diary
 A Diary built with Django and React.
 
+## Prerequisit
+Create a `.env` file and provide a secret. It can be obtained eg [here](https://djecrety.ir/)
+```env
+DJANGO_SECRET='paste your secret here'
+```
+
 ## Install
 ```bash
 # Install Python deps
