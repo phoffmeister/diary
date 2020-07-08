@@ -1,0 +1,311 @@
+[
+{
+    "model": "api.medicationamount",
+    "pk": 1,
+    "fields": {
+        "amount": 10
+    }
+},
+{
+    "model": "api.medicationamount",
+    "pk": 2,
+    "fields": {
+        "amount": 400
+    }
+},
+{
+    "model": "api.medicationamount",
+    "pk": 3,
+    "fields": {
+        "amount": 600
+    }
+},
+{
+    "model": "api.medicationamount",
+    "pk": 4,
+    "fields": {
+        "amount": 500
+    }
+},
+{
+    "model": "api.medication",
+    "pk": 1,
+    "fields": {
+        "name": "Cetirizin"
+    }
+},
+{
+    "model": "api.medication",
+    "pk": 2,
+    "fields": {
+        "name": "Ibuprofen"
+    }
+},
+{
+    "model": "api.medication",
+    "pk": 3,
+    "fields": {
+        "name": "Paracetamol"
+    }
+},
+{
+    "model": "api.medication",
+    "pk": 4,
+    "fields": {
+        "name": "Aspirin"
+    }
+},
+{
+    "model": "api.drinktag",
+    "pk": 1,
+    "fields": {
+        "tag_text": "alcoholic"
+    }
+},
+{
+    "model": "api.drinktag",
+    "pk": 2,
+    "fields": {
+        "tag_text": "non-alcoholic"
+    }
+},
+{
+    "model": "api.drinktag",
+    "pk": 3,
+    "fields": {
+        "tag_text": "sugary"
+    }
+},
+{
+    "model": "api.drinktag",
+    "pk": 4,
+    "fields": {
+        "tag_text": "contains caffeine"
+    }
+},
+{
+    "model": "api.drinktag",
+    "pk": 5,
+    "fields": {
+        "tag_text": "not caffeinated"
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 1,
+    "fields": {
+        "name": "coffee",
+        "tag": [
+            2,
+            3,
+            4
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 2,
+    "fields": {
+        "name": "coffee",
+        "tag": [
+            2,
+            3,
+            5
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 3,
+    "fields": {
+        "name": "coffee",
+        "tag": [
+            2,
+            4
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 4,
+    "fields": {
+        "name": "coffee",
+        "tag": [
+            2,
+            5
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 5,
+    "fields": {
+        "name": "tea",
+        "tag": [
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 6,
+    "fields": {
+        "name": "tea",
+        "tag": [
+            2
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 7,
+    "fields": {
+        "name": "water",
+        "tag": [
+            2
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 8,
+    "fields": {
+        "name": "beer",
+        "tag": [
+            1
+        ]
+    }
+},
+{
+    "model": "api.drinktype",
+    "pk": 9,
+    "fields": {
+        "name": "wine",
+        "tag": [
+            1
+        ]
+    }
+},
+{
+    "model": "api.drinkamount",
+    "pk": 1,
+    "fields": {
+        "amount": 20
+    }
+},
+{
+    "model": "api.drinkamount",
+    "pk": 2,
+    "fields": {
+        "amount": 40
+    }
+},
+{
+    "model": "api.drinkamount",
+    "pk": 3,
+    "fields": {
+        "amount": 250
+    }
+},
+{
+    "model": "api.drinkamount",
+    "pk": 4,
+    "fields": {
+        "amount": 333
+    }
+},
+{
+    "model": "api.drinkamount",
+    "pk": 5,
+    "fields": {
+        "amount": 500
+    }
+},
+{
+    "model": "api.drinkamount",
+    "pk": 6,
+    "fields": {
+        "amount": 750
+    }
+},
+{
+    "model": "api.drinkamount",
+    "pk": 7,
+    "fields": {
+        "amount": 1000
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 1,
+    "fields": {
+        "example": "shot",
+        "drink_amount": 1
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 2,
+    "fields": {
+        "example": "double shot",
+        "drink_amount": 2
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 3,
+    "fields": {
+        "example": "glass",
+        "drink_amount": 3
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 4,
+    "fields": {
+        "example": "small can",
+        "drink_amount": 3
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 5,
+    "fields": {
+        "example": "can",
+        "drink_amount": 4
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 6,
+    "fields": {
+        "example": "small bottle",
+        "drink_amount": 5
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 7,
+    "fields": {
+        "example": "medium bottle",
+        "drink_amount": 6
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 8,
+    "fields": {
+        "example": "large bottle",
+        "drink_amount": 7
+    }
+},
+{
+    "model": "api.drinkamountexample",
+    "pk": 9,
+    "fields": {
+        "example": "cup",
+        "drink_amount": 3
+    }
+}
+]

@@ -10,14 +10,17 @@ pipenv install
 pipenv run python diary/manage.py makemigrations api fe
 pipenv run python diary/manage.py migrate
 
-# create a superuser
-pipenv run python diary/manage.py createsuperuser
+# (optional) load testuser admin:admin
+pipenv run python diary/manage.py loaddata meta/fixtures/auth_DEVONLY.json
+
+# (optional) load fixtures for drinks and medications
+pipenv run python diary/manage.py loaddata meta/fixtures/api.json
 
 # Install js deps
 yarn install
 ```
 
-## Run
+## Run dev
 ```bash
 # build react frontend
 yarn run dev
