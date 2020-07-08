@@ -18,6 +18,13 @@ class MedicationEntryAdmin(admin.ModelAdmin):
 class PhotoEntryAdmin(admin.ModelAdmin):
     list_display = ('collection', 'photo', 'owner')
 
+class DrinkTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'get_tags')
+
+    def get_tags(self, obj):
+        return "\n".join([t.tag_text for t in obj.tag.all()])
+
+
 
 admin.site.register(EntryCollection)
 admin.site.register(TextEntry, TextEntryAdmin)
@@ -26,7 +33,7 @@ admin.site.register(DrinkEntry, DrinkEntryAdmin)
 admin.site.register(DrinkTag)
 admin.site.register(DrinkAmount)
 admin.site.register(DrinkAmountExample)
-admin.site.register(DrinkType)
+admin.site.register(DrinkType, DrinkTypeAdmin)
 
 
 admin.site.register(Medication)
