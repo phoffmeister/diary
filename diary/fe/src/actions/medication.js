@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { tokenConfig } from './auth';
-import { GET_MEDICATION_OPTS } from './types';
+import { GET_MEDICATION_OPTS, GET_DAY } from './types';
 
 export const getMedicationOpts = () => (dispatch, getState) => {
   axios
@@ -14,11 +14,19 @@ export const getMedicationOpts = () => (dispatch, getState) => {
     .catch((err) => console.log(err));
 }
 
-export const createMedication = (medicationEntry, history) => (dispatch, getState) => {
+export const createMedication = medicationEntry => (dispatch, getState) => {
   axios
     .post('/api/medication/', medicationEntry, tokenConfig(getState))
     .then(res => {
-        history.push(`/day/${res.data.collection}/`)
+      axios
+        .get(`/api/day/${res.data.collection}/`, tokenConfig(getState))
+        .then(res => {
+          dispatch({
+            type: GET_DAY,
+            payload: res.data
+          });
+    })
+    .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 }

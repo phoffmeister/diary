@@ -1,4 +1,4 @@
-import { GET_DAY } from "../actions/types";
+import { GET_DAY, CREATE_TEXT_SUCCESS, CREATE_PHOTO_SUCCESS, CREATE_MEDICATION_SUCCESS } from "../actions/types";
 
 const initialState = {
   day: {
@@ -15,8 +15,29 @@ export default function (state=initialState, action) {
   switch(action.type) {
     case GET_DAY:
       return {
-        ...state,
         day: action.payload
+      };
+    case CREATE_TEXT_SUCCESS:
+      return {
+        ...state,
+        day: {
+          ...state.day,
+          texts:[
+            ...state.day.texts,
+            action.payload
+          ]
+        }
+      };
+    case CREATE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        day: {
+          ...state.day,
+          photos:[
+            ...state.day.photos,
+            action.payload
+          ]
+        }
       };
     default:
       return state;

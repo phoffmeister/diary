@@ -1,4 +1,3 @@
-
 import { GET_MEDICATION_OPTS } from "../actions/types";
 
 const initialState = {

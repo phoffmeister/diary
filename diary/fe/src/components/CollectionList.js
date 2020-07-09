@@ -16,7 +16,7 @@ import { getCollections, createCollection } from '../actions/collections'
 
 class CollectionListRow extends Component {
   render() {
-    let centerStyle = { textAlign: 'center' };
+    const centerStyle = { textAlign: 'center' };
     return (
       <tr>
         <td>
