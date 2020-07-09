@@ -7,6 +7,8 @@ import TextEntries from './TextEntries';
 import DrinkEntries from './DrinkEntries';
 import PhotoEntries from './PhotoEntries';
 import MedicationEntries from './MedicationEntries';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 class Day extends Component {
   static propTypes = {
@@ -22,18 +24,20 @@ class Day extends Component {
   render() {
     const createButtons = (
         <div className="mb-2">
-        <Link to={`/create/text/${this.props.day.id}/`}>
-        <button className="btn btn-primary btn-sm mr-1">Add Text</button>
-        </Link>
-        <Link to={`/create/drink/${this.props.day.id}/`}>
-        <button className="btn btn-primary btn-sm mr-1">Add Drink</button>
-        </Link>
-        <Link to={`/create/medication/${this.props.day.id}/`}>
-        <button className="btn btn-primary btn-sm mr-1">Add Medication</button>
-        </Link>
-        <Link to={`/create/photo/${this.props.day.id}/`}>
-        <button className="btn btn-primary btn-sm mr-1">Add Photo</button>
-        </Link>
+        <DropdownButton id="dropdown-basic-button" title="Create">
+          <Dropdown.Item href="#/action-1">
+            <Link to={`/create/text/${this.props.day.id}/`}>Text</Link>
+          </Dropdown.Item>
+          <Dropdown.Item href="#/action-1">
+            <Link to={`/create/photo/${this.props.day.id}/`}>Photo</Link>
+          </Dropdown.Item>
+          <Dropdown.Item href="#/action-1">
+            <Link to={`/create/drink/${this.props.day.id}/`}>Drink</Link>
+          </Dropdown.Item>
+          <Dropdown.Item href="#/action-1">
+            <Link to={`/create/medication/${this.props.day.id}/`}>Medication</Link>
+          </Dropdown.Item>
+        </DropdownButton>
         </div>
     )
     return (
