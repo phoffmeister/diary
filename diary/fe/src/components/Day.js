@@ -24,19 +24,11 @@ class Day extends Component {
   render() {
     const createButtons = (
         <div className="mb-2">
-        <DropdownButton id="dropdown-basic-button" title="Create">
-          <Dropdown.Item href="#/action-1">
-            <Link to={`/create/text/${this.props.day.id}/`}>Text</Link>
-          </Dropdown.Item>
-          <Dropdown.Item href="#/action-1">
-            <Link to={`/create/photo/${this.props.day.id}/`}>Photo</Link>
-          </Dropdown.Item>
-          <Dropdown.Item href="#/action-1">
-            <Link to={`/create/drink/${this.props.day.id}/`}>Drink</Link>
-          </Dropdown.Item>
-          <Dropdown.Item href="#/action-1">
-            <Link to={`/create/medication/${this.props.day.id}/`}>Medication</Link>
-          </Dropdown.Item>
+        <DropdownButton title="Create">
+          <Dropdown.Item as={Link} to={`/create/text/${this.props.day.id}/`}>Text</Dropdown.Item>
+          <Dropdown.Item as={Link} to={`/create/photo/${this.props.day.id}/`}>Photo</Dropdown.Item>
+          <Dropdown.Item as={Link} to={`/create/drink/${this.props.day.id}/`}>Drink</Dropdown.Item>
+          <Dropdown.Item as={Link} to={`/create/medication/${this.props.day.id}/`}>Medication</Dropdown.Item>
         </DropdownButton>
         </div>
     )
