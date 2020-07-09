@@ -1,8 +1,7 @@
-import { CREATE_COLLECTION, SELECT_DATE, GET_COLLECTIONS } from "../actions/types";
+import { CREATE_COLLECTION, GET_COLLECTIONS } from "../actions/types";
 
 const initialState = {
   collections: [],
-  date: new Date(),
 }
 
 export default function (state=initialState, action) {
@@ -13,11 +12,6 @@ export default function (state=initialState, action) {
       return {
         ...state,
         collections: sorted_collection,
-      };
-    case SELECT_DATE:
-      return {
-        ...state,
-        date: action.payload,
       };
     case GET_COLLECTIONS:
       return {

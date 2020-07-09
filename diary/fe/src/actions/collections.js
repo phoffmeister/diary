@@ -28,9 +28,3 @@ export const createCollection = (date) => (dispatch, getState) => {
     .catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
 }
 
-export const selectDate = (date) => dispatch => {
-  dispatch({
-    type: SELECT_DATE,
-    payload: date
-  });
-}
