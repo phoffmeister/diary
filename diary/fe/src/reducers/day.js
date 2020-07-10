@@ -1,4 +1,4 @@
-import { GET_DAY, CREATE_TEXT_SUCCESS, CREATE_PHOTO_SUCCESS, CREATE_MEDICATION_SUCCESS } from "../actions/types";
+import { GET_DAY, CREATE_TEXT_SUCCESS, CREATE_PHOTO_SUCCESS } from "../actions/types";
 
 const initialState = {
   day: {
