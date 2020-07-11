@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { tokenConfig } from './auth';
 import { GET_MEDICATION_OPTS, GET_DAY } from './types';
+import { createMessage } from "./messages";
 
 export const getMedicationOpts = () => (dispatch, getState) => {
   axios
@@ -11,7 +12,7 @@ export const getMedicationOpts = () => (dispatch, getState) => {
         payload: res.data
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(createMessage('cannot get med opts')));
 }
 
 export const createMedication = medicationEntry => (dispatch, getState) => {
@@ -25,9 +26,10 @@ export const createMedication = medicationEntry => (dispatch, getState) => {
             type: GET_DAY,
             payload: res.data
           });
+        dispatch(createMessage('MedicationEntry created!'));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(createMessage('cannot get day')));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(createMessage('cannot create med entry')));
 }
 

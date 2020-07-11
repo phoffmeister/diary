@@ -11,6 +11,7 @@ export const createText = textEntry => (dispatch, getState) => {
           type: CREATE_TEXT_SUCCESS,
           payload: res.data
         });
+        dispatch(createMessage('TextEntry created!'));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(createMessage('cannot create TextEntry')));
 }

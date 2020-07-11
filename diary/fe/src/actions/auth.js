@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { returnErrors } from './messages';
+import { createMessage } from './messages';
 
 import {
   USER_LOADED,
@@ -24,7 +24,7 @@ export const loadUser = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(createMessage('could not get user'));
       dispatch({
         type: AUTH_ERROR,
       });
@@ -53,7 +53,7 @@ export const login = (username, password) => (dispatch) => {
       dispatch(loadUser());
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(createMessage('login failed'));
       dispatch({
         type: LOGIN_FAIL,
       });
@@ -71,7 +71,7 @@ export const logout = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(createMessage('logout failed'));
     });
 };
 

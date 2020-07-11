@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { tokenConfig } from './auth';
 import { GET_DRINK_OPTS, GET_DAY } from './types';
+import { createMessage } from './messages';
 
 export const getDrinkOpts = () => (dispatch, getState) => {
   axios
@@ -11,7 +12,7 @@ export const getDrinkOpts = () => (dispatch, getState) => {
         payload: res.data
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(createMessage('cannot get drink options')));
 }
 
 export const createDrink = drinkEntry => (dispatch, getState) => {
@@ -25,9 +26,10 @@ export const createDrink = drinkEntry => (dispatch, getState) => {
             type: GET_DAY,
             payload: res.data
           });
+        dispatch(createMessage('DrinkEntry created'))
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(createMessage('cannot get day')));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => dispatch(createMessage('cannot create drink entry')));
 }
 

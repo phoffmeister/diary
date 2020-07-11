@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createMessage, returnErrors } from './messages';
+import { createMessage } from './messages';
 import { tokenConfig } from './auth';
 import { GET_DAY } from './types';
 
@@ -12,6 +12,6 @@ export const getDay = (dayID) => (dispatch, getState) => {
         payload: res.data
       });
     })
-    .catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
+    .catch((err) => dispatch(createMessage('cannot get day')));
 }
 

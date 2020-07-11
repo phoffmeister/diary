@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createMessage, returnErrors } from "./messages";
+import { createMessage } from "./messages";
 import { tokenConfig } from "./auth";
 import { CREATE_COLLECTION, SELECT_DATE, GET_COLLECTIONS } from "./types";
 
@@ -13,7 +13,7 @@ export const getCollections = () => (dispatch, getState) => {
             });
         })
         .catch(err =>
-            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch(createMessage('couldnt get collections'))
         );
 };
 
@@ -27,6 +27,6 @@ export const createCollection = date => (dispatch, getState) => {
             });
         })
         .catch(err =>
-            dispatch(returnErrors(err.response.data, err.response.status))
+            dispatch(createMessage('could not create collection'))
         );
 };
