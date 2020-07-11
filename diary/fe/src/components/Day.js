@@ -122,8 +122,7 @@ class Day extends Component {
                 size="sm"
                 variant="primary"
                 onClick={(e) => this.handleClick(e)}
-                type="submit"
-              >
+                type="submit">
                 Create
               </Button>
             </Form>
@@ -152,8 +151,7 @@ class Day extends Component {
                 size="sm"
                 variant="primary"
                 onClick={(e) => this.handleClick(e)}
-                type="submit"
-              >
+                type="submit">
                 Create
               </Button>
             </Form>
@@ -175,8 +173,7 @@ class Day extends Component {
                 <Form.Control
                   name="medNameId"
                   as="select"
-                  onChange={(e) => this.handleChange(e)}
-                >
+                  onChange={(e) => this.handleChange(e)}>
                   <option value="0">---</option>
                   {this.props.medicationOpts.names.map((opts) => (
                     <option key={opts.id} value={opts.id}>
@@ -190,8 +187,7 @@ class Day extends Component {
                 <Form.Control
                   name="medAmountId"
                   as="select"
-                  onChange={(e) => this.handleChange(e)}
-                >
+                  onChange={(e) => this.handleChange(e)}>
                   <option value="0">---</option>
                   {this.props.medicationOpts.amounts.map((opts) => (
                     <option key={opts.id} value={opts.id}>
@@ -214,8 +210,7 @@ class Day extends Component {
                 size="sm"
                 variant="primary"
                 onClick={(e) => this.handleClick(e)}
-                type="submit"
-              >
+                type="submit">
                 Create
               </Button>
             </Form>
@@ -237,8 +232,7 @@ class Day extends Component {
                 <Form.Control
                   name="drinkTypeId"
                   as="select"
-                  onChange={(e) => this.handleChange(e)}
-                >
+                  onChange={(e) => this.handleChange(e)}>
                   <option value="0">---</option>
                   {this.props.drinkOpts.types.map((opts) => (
                     <option key={opts.id} value={opts.id}>
@@ -252,8 +246,7 @@ class Day extends Component {
                 <Form.Control
                   name="drinkAmountId"
                   as="select"
-                  onChange={(e) => this.handleChange(e)}
-                >
+                  onChange={(e) => this.handleChange(e)}>
                   <option value="0">---</option>
                   {this.props.drinkOpts.amounts.map((opts) => (
                     <option key={opts.id} value={opts.id}>
@@ -276,8 +269,7 @@ class Day extends Component {
                 size="sm"
                 variant="primary"
                 onClick={(e) => this.handleClick(e)}
-                type="submit"
-              >
+                type="submit">
                 Create
               </Button>
             </Form>

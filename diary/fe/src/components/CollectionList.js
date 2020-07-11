@@ -89,8 +89,7 @@ class CollectionList extends Component {
               eventKey="0"
               as={Card.Header}
               className="text-right"
-              variant="link"
-            >
+              variant="link">
               Add more...
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
@@ -108,8 +107,7 @@ class CollectionList extends Component {
                     size="sm"
                     variant="primary"
                     type="submit"
-                    onClick={(e) => this.handleClick(e)}
-                  >
+                    onClick={(e) => this.handleClick(e)}>
                     Create new
                   </Button>
                 </Form>
