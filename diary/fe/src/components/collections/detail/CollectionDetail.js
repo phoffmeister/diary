@@ -108,7 +108,7 @@ class CollectionDetail extends Component {
     const createDrinkAccordion = (
       <Card>
         <Accordion.Toggle eventKey="3" as={Card.Header} variant="link">
-          Create Drink Entry
+          Drink Entries
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="3">
           <Fragment>
