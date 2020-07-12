@@ -16,7 +16,7 @@ import {
   faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { getCollections, createCollection } from "../actions/collections";
+import { getCollections, createCollection } from "../../../actions/collections";
 
 class CollectionListRow extends Component {
   render() {

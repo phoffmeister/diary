@@ -11,16 +11,4 @@ function MedicationEntry(props) {
   );
 }
 
-class MedicationEntries extends Component {
-  render() {
-    return (
-      <Fragment>
-        {this.props.medications.map((m) => (
-          <MedicationEntry key={m.id} medication={m} />
-        ))}
-      </Fragment>
-    );
-  }
-}
-
-export default MedicationEntries;
+export default MedicationEntry;

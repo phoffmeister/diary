@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getDay } from "../actions/day";
 import { matchPath, Link } from "react-router-dom";
-import TextEntries from "./TextEntries";
-import DrinkEntries from "./DrinkEntries";
-import PhotoEntries from "./PhotoEntries";
-import MedicationEntries from "./MedicationEntries";
+import TextEntry from "./entries/TextEntry";
+import DrinkEntry from "./entries/DrinkEntry";
+import PhotoEntry from "./entries/PhotoEntry";
+import MedicationEntry from "./entries/MedicationEntry";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
@@ -14,12 +13,16 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
-import { createText } from "../actions/text";
-import { createPhoto } from "../actions/photo";
-import { createMedication, getMedicationOpts } from "../actions/medication";
-import { createDrink, getDrinkOpts } from "../actions/drink";
+import { getDay } from "../../../actions/day";
+import { createText } from "../../../actions/text";
+import { createPhoto } from "../../../actions/photo";
+import {
+  createMedication,
+  getMedicationOpts,
+} from "../../../actions/medication";
+import { createDrink, getDrinkOpts } from "../../../actions/drink";
 
-class Day extends Component {
+class CollectionDetail extends Component {
   static propTypes = {
     day: PropTypes.object.isRequired,
   };
@@ -290,10 +293,18 @@ class Day extends Component {
           {createMedicationAccordion}
         </Accordion>
         <div className="mt-2">
-          <TextEntries texts={this.props.day.texts} />
-          <MedicationEntries medications={this.props.day.medications} />
-          <DrinkEntries drinks={this.props.day.drinks} />
-          <PhotoEntries photos={this.props.day.photos} />
+          {this.props.day.texts.map((t) => (
+            <TextEntry key={t.id} text={t.text} />
+          ))}
+          {this.props.day.medications.map((m) => (
+            <MedicationEntry key={m.id} medication={m} />
+          ))}
+          {this.props.day.drinks.map((d) => (
+            <DrinkEntry key={d.id} drink={d} />
+          ))}
+          {this.props.day.photos.map((t) => (
+            <PhotoEntry key={t.id} photo={t} />
+          ))}
         </div>
       </div>
     );
@@ -313,4 +324,4 @@ export default connect(mapStateToProps, {
   createDrink,
   getMedicationOpts,
   getDrinkOpts,
-})(Day);
+})(CollectionDetail);

@@ -13,16 +13,4 @@ function PhotoEntry(props) {
   );
 }
 
-class PhotoEntries extends Component {
-  render() {
-    return (
-      <Fragment>
-        {this.props.photos.map((t) => (
-          <PhotoEntry key={t.id} photo={t} />
-        ))}
-      </Fragment>
-    );
-  }
-}
-
-export default PhotoEntries;
+export default PhotoEntry;

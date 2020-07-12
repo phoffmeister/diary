@@ -38,16 +38,4 @@ function DrinkEntry(props) {
   );
 }
 
-class DrinkEntries extends Component {
-  render() {
-    return (
-      <Fragment>
-        {this.props.drinks.map((d) => (
-          <DrinkEntry key={d.id} drink={d} />
-        ))}
-      </Fragment>
-    );
-  }
-}
-
-export default DrinkEntries;
+export default DrinkEntry;

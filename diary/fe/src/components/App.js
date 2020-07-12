@@ -1,9 +1,9 @@
-import CollectionList from "./CollectionList";
-import Day from "./Day";
-import Alerts from "./Alerts.js";
-import Header from "./Header";
-import Login from "./Login";
-import PrivateRoute from "./PrivateRoute";
+import CollectionList from "./collections/list/CollectionList";
+import CollectionDetail from "./collections/detail/CollectionDetail";
+import Alerts from "./common/Alerts";
+import Header from "./layout/Header";
+import Login from "./auth/Login";
+import PrivateRoute from "./common/PrivateRoute";
 import React, { Component } from "react";
 import store from "../store";
 import {
@@ -39,7 +39,7 @@ export default class App extends Component {
             <Alerts />
             <Switch>
               <PrivateRoute exact path="/" component={CollectionList} />
-              <PrivateRoute path="/day/" component={Day} />
+              <PrivateRoute path="/day/" component={CollectionDetail} />
               <Route exact path="/login" component={Login} />
             </Switch>
           </Router>
