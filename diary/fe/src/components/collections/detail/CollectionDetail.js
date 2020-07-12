@@ -13,14 +13,11 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
+import CreateTextEntryForm from "./forms/CreateTextEntryForm";
+import CreatePhotoEntryForm from "./forms/CreatePhotoEntryForm";
+import CreateMedicationEntryForm from "./forms/CreateMedicationEntryForm";
+import CreateDrinkEntryForm from "./forms/CreateDrinkEntryForm";
 import { getDay } from "../../../actions/day";
-import { createText } from "../../../actions/text";
-import { createPhoto } from "../../../actions/photo";
-import {
-  createMedication,
-  getMedicationOpts,
-} from "../../../actions/medication";
-import { createDrink, getDrinkOpts } from "../../../actions/drink";
 
 class CollectionDetail extends Component {
   static propTypes = {
@@ -29,107 +26,39 @@ class CollectionDetail extends Component {
 
   constructor(props) {
     super(props);
-    const date = new Date();
-    const time = `${date.getHours()}:${date.getMinutes()}`;
-    this.state = {
-      text: "",
-      photo: null,
-      time,
-      medNameId: 0,
-      medAmountId: 0,
-      drinkTypeId: 0,
-      drinkAmountId: 0,
-    };
-  }
-
-  componentDidMount() {
     const path = this.props.location.pathname;
     const day = matchPath(path, {
       path: "/day/:id/",
       exact: true,
       strict: true,
     });
-    this.props.getDay(day.params.id);
-    this.props.getMedicationOpts();
-    this.props.getDrinkOpts();
+    this.state = {
+      dayID: day.params.id,
+    };
   }
 
-  handleClick(event) {
-    switch (event.target.name) {
-      case "textButton":
-        this.props.createText({
-          collection: this.props.day.id,
-          text: this.state.text,
-        });
-        break;
-      case "photoButton":
-        const formData = new FormData();
-        formData.append("photo", this.state.photo);
-        formData.append("collection", this.props.day.id);
-        this.props.createPhoto(formData);
-        break;
-      case "medButton":
-        this.props.createMedication({
-          time: this.state.time,
-          medication: this.state.medNameId,
-          amount: this.state.medAmountId,
-          collection: this.props.day.id,
-        });
-        break;
-      case "drinkButton":
-        this.props.createDrink({
-          name: this.state.drinkTypeId,
-          amount: this.state.drinkAmountId,
-          collection: this.props.day.id,
-          time: this.state.time,
-        });
-        break;
-      default:
-        break;
-    }
-    event.preventDefault();
-  }
-
-  handleChange(event) {
-    if (event.target.name === "photo") {
-      this.setState({
-        photo: event.target.files[0],
-      });
-      return;
-    }
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+  componentDidMount() {
+    this.props.getDay(this.state.dayID);
   }
 
   render() {
     const createTextAccordion = (
       <Card>
         <Accordion.Toggle eventKey="0" as={Card.Header} variant="link">
-          Create Text Entry
+          Text Entries
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="0">
-          <Card.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Text</Form.Label>
-                <Form.Control
-                  name="text"
-                  as="textarea"
-                  rows="3"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Button
-                name="textButton"
-                size="sm"
-                variant="primary"
-                onClick={(e) => this.handleClick(e)}
-                type="submit">
-                Create
-              </Button>
-            </Form>
-          </Card.Body>
+          <Fragment>
+            <Card.Body>
+              {this.props.day.texts.map((t) => (
+                <TextEntry key={t.id} text={t.text} />
+              ))}
+            </Card.Body>
+            <Card.Body>
+              <Card.Title>Create New Text Entry</Card.Title>
+              <CreateTextEntryForm dayID={this.state.dayID} />
+            </Card.Body>
+          </Fragment>
         </Accordion.Collapse>
       </Card>
     );
@@ -137,28 +66,20 @@ class CollectionDetail extends Component {
     const createPhotoAccordion = (
       <Card>
         <Accordion.Toggle eventKey="1" as={Card.Header} variant="link">
-          Create Photo Entry
+          Photo Entries
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="1">
-          <Card.Body>
-            <Form>
-              <Form.Group>
-                <Form.File
-                  name="photo"
-                  label="Photo"
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Button
-                name="photoButton"
-                size="sm"
-                variant="primary"
-                onClick={(e) => this.handleClick(e)}
-                type="submit">
-                Create
-              </Button>
-            </Form>
-          </Card.Body>
+          <Fragment>
+            <Card.Body>
+              {this.props.day.photos.map((t) => (
+                <PhotoEntry key={t.id} photo={t} />
+              ))}
+            </Card.Body>
+            <Card.Body>
+              <Card.Title>Create New Photo Entry</Card.Title>
+              <CreatePhotoEntryForm dayID={this.state.dayID} />
+            </Card.Body>
+          </Fragment>
         </Accordion.Collapse>
       </Card>
     );
@@ -166,58 +87,20 @@ class CollectionDetail extends Component {
     const createMedicationAccordion = (
       <Card>
         <Accordion.Toggle eventKey="2" as={Card.Header} variant="link">
-          Create Medication Entry
+          Medication Entries
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="2">
-          <Card.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Medication</Form.Label>
-                <Form.Control
-                  name="medNameId"
-                  as="select"
-                  onChange={(e) => this.handleChange(e)}>
-                  <option value="0">---</option>
-                  {this.props.medicationOpts.names.map((opts) => (
-                    <option key={opts.id} value={opts.id}>
-                      {opts.name}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Amount</Form.Label>
-                <Form.Control
-                  name="medAmountId"
-                  as="select"
-                  onChange={(e) => this.handleChange(e)}>
-                  <option value="0">---</option>
-                  {this.props.medicationOpts.amounts.map((opts) => (
-                    <option key={opts.id} value={opts.id}>
-                      {opts.amount}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Time</Form.Label>
-                <Form.Control
-                  name="time"
-                  type="time"
-                  value={this.state.time}
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Button
-                name="medButton"
-                size="sm"
-                variant="primary"
-                onClick={(e) => this.handleClick(e)}
-                type="submit">
-                Create
-              </Button>
-            </Form>
-          </Card.Body>
+          <Fragment>
+            <Card.Body>
+              {this.props.day.medications.map((m) => (
+                <MedicationEntry key={m.id} medication={m} />
+              ))}
+            </Card.Body>
+            <Card.Body>
+              <Card.Title>Create New Medication Entry</Card.Title>
+              <CreateMedicationEntryForm dayID={this.state.dayID} />
+            </Card.Body>
+          </Fragment>
         </Accordion.Collapse>
       </Card>
     );
@@ -228,62 +111,24 @@ class CollectionDetail extends Component {
           Create Drink Entry
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="3">
-          <Card.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Drink</Form.Label>
-                <Form.Control
-                  name="drinkTypeId"
-                  as="select"
-                  onChange={(e) => this.handleChange(e)}>
-                  <option value="0">---</option>
-                  {this.props.drinkOpts.types.map((opts) => (
-                    <option key={opts.id} value={opts.id}>
-                      {opts.name + " (" + opts.tags.join(", ") + ")"}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Amount</Form.Label>
-                <Form.Control
-                  name="drinkAmountId"
-                  as="select"
-                  onChange={(e) => this.handleChange(e)}>
-                  <option value="0">---</option>
-                  {this.props.drinkOpts.amounts.map((opts) => (
-                    <option key={opts.id} value={opts.id}>
-                      {opts.amount + " (" + opts.examples.join(", ") + ")"}
-                    </option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Time</Form.Label>
-                <Form.Control
-                  name="time"
-                  type="time"
-                  value={this.state.time}
-                  onChange={(e) => this.handleChange(e)}
-                />
-              </Form.Group>
-              <Button
-                name="drinkButton"
-                size="sm"
-                variant="primary"
-                onClick={(e) => this.handleClick(e)}
-                type="submit">
-                Create
-              </Button>
-            </Form>
-          </Card.Body>
+          <Fragment>
+            <Card.Body>
+              {this.props.day.drinks.map((d) => (
+                <DrinkEntry key={d.id} drink={d} />
+              ))}
+            </Card.Body>
+            <Card.Body>
+              <Card.Title>Create New Drink Entry</Card.Title>
+              <CreateDrinkEntryForm dayID={this.state.dayID} />
+            </Card.Body>
+          </Fragment>
         </Accordion.Collapse>
       </Card>
     );
 
     return (
       <div className="container">
-        <Accordion className="mt-2">
+        <Accordion className="mt-2" defaultActiveKey="0">
           <Card>
             <Card.Header>Entries from {this.props.day.date}</Card.Header>
           </Card>
@@ -292,36 +137,14 @@ class CollectionDetail extends Component {
           {createDrinkAccordion}
           {createMedicationAccordion}
         </Accordion>
-        <div className="mt-2">
-          {this.props.day.texts.map((t) => (
-            <TextEntry key={t.id} text={t.text} />
-          ))}
-          {this.props.day.medications.map((m) => (
-            <MedicationEntry key={m.id} medication={m} />
-          ))}
-          {this.props.day.drinks.map((d) => (
-            <DrinkEntry key={d.id} drink={d} />
-          ))}
-          {this.props.day.photos.map((t) => (
-            <PhotoEntry key={t.id} photo={t} />
-          ))}
-        </div>
       </div>
     );
   }
 }
 const mapStateToProps = (state) => ({
   day: state.day.day,
-  medicationOpts: state.medication.opts,
-  drinkOpts: state.drink.opts,
 });
 
 export default connect(mapStateToProps, {
   getDay,
-  createText,
-  createPhoto,
-  createMedication,
-  createDrink,
-  getMedicationOpts,
-  getDrinkOpts,
 })(CollectionDetail);
