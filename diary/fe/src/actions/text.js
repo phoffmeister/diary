@@ -3,7 +3,10 @@ import { createMessage, MERROR, MSUCCESS, MINFO } from "./messages";
 import { tokenConfig } from "./auth";
 import { CREATE_TEXT_SUCCESS } from "./types";
 
-export const createText = (textEntry) => (dispatch, getState) => {
+export const createText = (textEntry, successCallback) => (
+  dispatch,
+  getState
+) => {
   axios
     .post("/api/text/", textEntry, tokenConfig(getState))
     .then((res) => {
@@ -12,6 +15,7 @@ export const createText = (textEntry) => (dispatch, getState) => {
         payload: res.data,
       });
       dispatch(createMessage("TextEntry created!", MSUCCESS));
+      if (successCallback) successCallback();
     })
     .catch((err) => dispatch(createMessage("cannot create TextEntry", MERROR)));
 };

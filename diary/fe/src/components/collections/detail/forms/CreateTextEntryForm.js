@@ -13,16 +13,25 @@ class CreateTextEntryForm extends Component {
   }
 
   handleClick(event) {
-    this.props.createText({
-      collection: this.props.dayID,
-      text: this.state.text,
-    });
+    this.props.createText(
+      {
+        collection: this.props.dayID,
+        text: this.state.text,
+      },
+      () => this.clearForm()
+    );
     event.preventDefault();
   }
 
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
+    });
+  }
+
+  clearForm() {
+    this.setState({
+      text: "",
     });
   }
 
@@ -35,6 +44,7 @@ class CreateTextEntryForm extends Component {
             name="text"
             as="textarea"
             rows="3"
+            value={this.state.text}
             onChange={(e) => this.handleChange(e)}
           />
         </Form.Group>

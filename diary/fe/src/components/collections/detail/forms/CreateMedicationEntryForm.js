@@ -20,12 +20,15 @@ class CreateMedicationEntryForm extends Component {
   }
 
   handleClick(event) {
-    this.props.createMedication({
-      time: this.state.time,
-      medication: this.state.medNameId,
-      amount: this.state.medAmountId,
-      collection: this.props.dayID,
-    });
+    this.props.createMedication(
+      {
+        time: this.state.time,
+        medication: this.state.medNameId,
+        amount: this.state.medAmountId,
+        collection: this.props.dayID,
+      },
+      () => this.clearForm()
+    );
     event.preventDefault();
   }
 
@@ -39,6 +42,16 @@ class CreateMedicationEntryForm extends Component {
     this.props.getMedicationOpts();
   }
 
+  clearForm() {
+    const date = new Date();
+    const time = `${date.getHours()}:${date.getMinutes()}`;
+    this.setState({
+      time,
+      medNameId: 0,
+      medAmountId: 0,
+    });
+  }
+
   render() {
     return (
       <Form onSubmit={(e) => this.handleClick(e)}>
@@ -47,6 +60,7 @@ class CreateMedicationEntryForm extends Component {
           <Form.Control
             name="medNameId"
             as="select"
+            value={this.state.medNameId}
             onChange={(e) => this.handleChange(e)}>
             <option value="0">---</option>
             {this.props.medicationOpts.names.map((opts) => (
@@ -61,6 +75,7 @@ class CreateMedicationEntryForm extends Component {
           <Form.Control
             name="medAmountId"
             as="select"
+            value={this.state.medAmountId}
             onChange={(e) => this.handleChange(e)}>
             <option value="0">---</option>
             {this.props.medicationOpts.amounts.map((opts) => (

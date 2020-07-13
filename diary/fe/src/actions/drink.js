@@ -17,7 +17,10 @@ export const getDrinkOpts = () => (dispatch, getState) => {
     );
 };
 
-export const createDrink = (drinkEntry) => (dispatch, getState) => {
+export const createDrink = (drinkEntry, successCallback) => (
+  dispatch,
+  getState
+) => {
   axios
     .post("/api/drink/", drinkEntry, tokenConfig(getState))
     .then((res) => {
@@ -29,6 +32,7 @@ export const createDrink = (drinkEntry) => (dispatch, getState) => {
             payload: res.data,
           });
           dispatch(createMessage("DrinkEntry created", MSUCCESS));
+          if (successCallback) successCallback();
         })
         .catch((err) => dispatch(createMessage("cannot get day", MERROR)));
     })

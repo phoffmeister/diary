@@ -15,7 +15,10 @@ export const getMedicationOpts = () => (dispatch, getState) => {
     .catch((err) => dispatch(createMessage("cannot get med opts", MERROR)));
 };
 
-export const createMedication = (medicationEntry) => (dispatch, getState) => {
+export const createMedication = (medicationEntry, successCallback) => (
+  dispatch,
+  getState
+) => {
   axios
     .post("/api/medication/", medicationEntry, tokenConfig(getState))
     .then((res) => {
@@ -27,6 +30,7 @@ export const createMedication = (medicationEntry) => (dispatch, getState) => {
             payload: res.data,
           });
           dispatch(createMessage("MedicationEntry created!", MSUCCESS));
+          if (successCallback) successCallback();
         })
         .catch((err) => dispatch(createMessage("cannot get day", MERROR)));
     })

@@ -17,12 +17,15 @@ class CreateTextEntryForm extends Component {
   }
 
   handleClick(event) {
-    this.props.createDrink({
-      name: this.state.drinkTypeId,
-      amount: this.state.drinkAmountId,
-      collection: this.props.dayID,
-      time: this.state.time,
-    });
+    this.props.createDrink(
+      {
+        name: this.state.drinkTypeId,
+        amount: this.state.drinkAmountId,
+        collection: this.props.dayID,
+        time: this.state.time,
+      },
+      () => this.clearForm()
+    );
     event.preventDefault();
   }
 
@@ -36,6 +39,16 @@ class CreateTextEntryForm extends Component {
     });
   }
 
+  clearForm() {
+    const date = new Date();
+    const time = `${date.getHours()}:${date.getMinutes()}`;
+    this.setState({
+      time,
+      drinkTypeId: 0,
+      drinkAmountId: 0,
+    });
+  }
+
   render() {
     return (
       <Form onSubmit={(e) => this.handleClick(e)}>
@@ -44,6 +57,7 @@ class CreateTextEntryForm extends Component {
           <Form.Control
             name="drinkTypeId"
             as="select"
+            value={this.state.drinkTypeId}
             onChange={(e) => this.handleChange(e)}>
             <option value="0">---</option>
             {this.props.drinkOpts.types.map((opts) => (
@@ -58,6 +72,7 @@ class CreateTextEntryForm extends Component {
           <Form.Control
             name="drinkAmountId"
             as="select"
+            value={this.state.drinkAmountId}
             onChange={(e) => this.handleChange(e)}>
             <option value="0">---</option>
             {this.props.drinkOpts.amounts.map((opts) => (
