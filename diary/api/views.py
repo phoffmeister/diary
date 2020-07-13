@@ -113,6 +113,7 @@ class TextEntryViewSet(
         mixins.CreateModelMixin,
         mixins.ListModelMixin,
         mixins.RetrieveModelMixin,
+        mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -134,6 +135,7 @@ class DrinkEntryViewSet(
         mixins.CreateModelMixin,
         mixins.ListModelMixin,
         mixins.RetrieveModelMixin,
+        mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -155,6 +157,7 @@ class PhotoEntryViewSet(
         mixins.CreateModelMixin,
         mixins.ListModelMixin,
         mixins.RetrieveModelMixin,
+        mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -176,6 +179,7 @@ class MedicationEntryViewSet(
         mixins.CreateModelMixin,
         mixins.ListModelMixin,
         mixins.RetrieveModelMixin,
+        mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
         permissions.IsAuthenticated,

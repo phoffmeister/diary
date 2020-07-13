@@ -50,7 +50,7 @@ class CollectionDetail extends Component {
             dayID={this.state.dayID}
             accordionID="0"
             entries={this.props.day.texts}
-            mapper={(e) => <TextEntry key={e.id} text={e.text} />}
+            mapper={(e) => <TextEntry key={e.id} text={e} />}
           />
           <EntryAccordion
             title="Photo"
