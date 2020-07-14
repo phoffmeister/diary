@@ -1,6 +1,10 @@
 import axios from "axios";
 import { tokenConfig } from "./auth";
-import { GET_MEDICATION_OPTS, GET_DAY } from "./types";
+import {
+  DELETE_MEDICATION_SUCCESS,
+  GET_MEDICATION_OPTS,
+  GET_DAY,
+} from "./types";
 import { createMessage, MERROR, MSUCCESS, MINFO } from "./messages";
 
 export const getMedicationOpts = () => (dispatch, getState) => {
@@ -35,4 +39,19 @@ export const createMedication = (medicationEntry, successCallback) => (
         .catch((err) => dispatch(createMessage("cannot get day", MERROR)));
     })
     .catch((err) => dispatch(createMessage("cannot create med entry", MERROR)));
+};
+
+export const deleteMedication = (medicationID) => (dispatch, getState) => {
+  axios
+    .delete(`/api/medication/${medicationID}/`, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: DELETE_MEDICATION_SUCCESS,
+        payload: medicationID,
+      });
+      dispatch(createMessage("MedicationEntry deleted!", MSUCCESS));
+    })
+    .catch((err) =>
+      dispatch(createMessage("cannot delete MedicationEntry", MERROR))
+    );
 };
