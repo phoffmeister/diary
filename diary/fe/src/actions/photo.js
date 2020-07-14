@@ -3,7 +3,10 @@ import { createMessage, MERROR, MSUCCESS, MINFO } from "./messages";
 import { tokenConfig } from "./auth";
 import { CREATE_PHOTO_SUCCESS, DELETE_PHOTO_SUCCESS } from "./types";
 
-export const createPhoto = (photoEntry) => (dispatch, getState) => {
+export const createPhoto = (photoEntry, successCallback) => (
+  dispatch,
+  getState
+) => {
   axios
     .post(`/api/photo/`, photoEntry, tokenConfig(getState))
     .then((res) => {
@@ -12,6 +15,7 @@ export const createPhoto = (photoEntry) => (dispatch, getState) => {
         payload: res.data,
       });
       dispatch(createMessage("PhotoEntry created!", MSUCCESS));
+      if (successCallback) successCallback();
     })
     .catch((err) =>
       dispatch(createMessage("cannot create PhotoEntry", MERROR))

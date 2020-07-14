@@ -9,6 +9,7 @@ class CreatePhotoEntryForm extends Component {
     super(props);
     this.state = {
       photo: null,
+      caption: "",
     };
   }
 
@@ -16,13 +17,26 @@ class CreatePhotoEntryForm extends Component {
     const formData = new FormData();
     formData.append("photo", this.state.photo);
     formData.append("collection", this.props.dayID);
-    this.props.createPhoto(formData);
+    formData.append("caption", this.state.caption);
+    this.props.createPhoto(formData, () => this.clearForm());
     event.preventDefault();
   }
 
   handleChange(event) {
+    if (event.target.name == "caption") {
+      this.setState({
+        [event.target.name]: event.target.value,
+      });
+    } else if (event.target.name == "photo") {
+      this.setState({
+        photo: event.target.files[0],
+      });
+    }
+  }
+
+  clearForm() {
     this.setState({
-      photo: event.target.files[0],
+      caption: "",
     });
   }
 
@@ -33,6 +47,16 @@ class CreatePhotoEntryForm extends Component {
           <Form.File
             name="photo"
             label="Photo"
+            onChange={(e) => this.handleChange(e)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Caption</Form.Label>
+          <Form.Control
+            size="sm"
+            name="caption"
+            type="text"
+            value={this.state.caption}
             onChange={(e) => this.handleChange(e)}
           />
         </Form.Group>
