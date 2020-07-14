@@ -1,6 +1,6 @@
 import axios from "axios";
 import { tokenConfig } from "./auth";
-import { GET_DRINK_OPTS, GET_DAY } from "./types";
+import { DELETE_DRINK_SUCCESS, GET_DRINK_OPTS, GET_DAY } from "./types";
 import { createMessage, MERROR, MSUCCESS, MINFO } from "./messages";
 
 export const getDrinkOpts = () => (dispatch, getState) => {
@@ -38,5 +38,20 @@ export const createDrink = (drinkEntry, successCallback) => (
     })
     .catch((err) =>
       dispatch(createMessage("cannot create drink entry", MERROR))
+    );
+};
+
+export const deleteDrink = (drinkID) => (dispatch, getState) => {
+  axios
+    .delete(`/api/drink/${drinkID}/`, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: DELETE_DRINK_SUCCESS,
+        payload: drinkID,
+      });
+      dispatch(createMessage("DrinkEntry deleted!", MSUCCESS));
+    })
+    .catch((err) =>
+      dispatch(createMessage("cannot delete DrinkEntry", MERROR))
     );
 };

@@ -4,6 +4,7 @@ import {
   CREATE_PHOTO_SUCCESS,
   DELETE_TEXT_SUCCESS,
   DELETE_PHOTO_SUCCESS,
+  DELETE_DRINK_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -37,6 +38,14 @@ export default function (state = initialState, action) {
         day: {
           ...state.day,
           photos: [...state.day.photos, action.payload],
+        },
+      };
+    case DELETE_DRINK_SUCCESS:
+      return {
+        ...state,
+        day: {
+          ...state.day,
+          drinks: state.day.drinks.filter((e) => e.id != action.payload),
         },
       };
     case DELETE_PHOTO_SUCCESS:

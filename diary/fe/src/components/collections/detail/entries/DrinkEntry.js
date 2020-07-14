@@ -1,4 +1,12 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { deleteDrink } from "../../../../actions/drink";
+import DeleteButton from "../../../layout/DeleteButton";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 function Tag(props) {
   let badge_name = "";
@@ -24,18 +32,46 @@ function Tag(props) {
   );
 }
 
-function DrinkEntry(props) {
-  return (
-    <div className="card mb-1 p-2">
-      <span>
-        {props.drink.time}: {props.drink.amount.amount}ml{" "}
-        {props.drink.name.name}
-        {props.drink.name.tag.map((t) => (
-          <Tag key={t.id} tag={t} />
-        ))}
-      </span>
-    </div>
-  );
+class DrinkEntry extends Component {
+  handleClick() {
+    confirmAlert({
+      title: "Delete DrinkEntry",
+      message: "Are you sure to do this?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => this.props.deleteDrink(this.props.drink.id),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  }
+
+  render() {
+    return (
+      <Card className="mb-1 p-2">
+        <Row>
+          <Col>
+            <span>
+              {this.props.drink.time}: {this.props.drink.amount.amount}ml{" "}
+              {this.props.drink.name.name}
+              {this.props.drink.name.tag.map((t) => (
+                <Tag key={t.id} tag={t} />
+              ))}
+            </span>
+          </Col>
+          <Col xs="auto">
+            <DeleteButton onClick={() => this.handleClick()} />
+          </Col>
+        </Row>
+      </Card>
+    );
+  }
 }
 
-export default DrinkEntry;
+export default connect(null, {
+  deleteDrink,
+})(DrinkEntry);
