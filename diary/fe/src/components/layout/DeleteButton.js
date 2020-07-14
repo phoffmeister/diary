@@ -7,14 +7,14 @@ export default class DeleteButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonStyle: "outline-danger",
+      buttonStyle: "outline-secondary",
     };
   }
   render() {
     return (
       <Button
         onMouseEnter={() => this.setState({ buttonStyle: "danger" })}
-        onMouseLeave={() => this.setState({ buttonStyle: "outline-danger" })}
+        onMouseLeave={() => this.setState({ buttonStyle: "outline-secondary" })}
         size="sm"
         variant={this.state.buttonStyle}
         onClick={() => this.props.onClick()}>
