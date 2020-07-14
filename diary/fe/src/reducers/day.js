@@ -3,6 +3,7 @@ import {
   CREATE_TEXT_SUCCESS,
   CREATE_PHOTO_SUCCESS,
   DELETE_TEXT_SUCCESS,
+  DELETE_PHOTO_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -36,6 +37,14 @@ export default function (state = initialState, action) {
         day: {
           ...state.day,
           photos: [...state.day.photos, action.payload],
+        },
+      };
+    case DELETE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        day: {
+          ...state.day,
+          photos: state.day.photos.filter((e) => e.id != action.payload),
         },
       };
     case DELETE_TEXT_SUCCESS:
