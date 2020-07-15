@@ -8,7 +8,13 @@ const noop = () => {};
 
 const FileInput = ({ value, onChange = noop, ...rest }) => (
   <div>
-    {Boolean(value.length) && <div>Selected file: {value}</div>}
+    {value !== null ? (
+      <div>
+        Selected file: {value.name}
+        <br />
+        <img width="250px" src={URL.createObjectURL(value)} />
+      </div>
+    ) : null}
     <label>
       Click to select a photo...
       <input
@@ -29,13 +35,12 @@ class CreatePhotoEntryForm extends Component {
     this.state = {
       photo: null,
       caption: "",
-      photoFilename: "",
     };
   }
 
   handleClick(event) {
     event.preventDefault();
-    if (this.state.photoFilename === "") return;
+    if (this.state.photo === null) return;
     const formData = new FormData();
     formData.append("photo", this.state.photo);
     formData.append("collection", this.props.dayID);
@@ -51,7 +56,6 @@ class CreatePhotoEntryForm extends Component {
     } else if (event.target.name == "photo") {
       this.setState({
         photo: event.target.files[0],
-        photoFilename: event.target.files[0].name,
       });
     }
   }
@@ -59,7 +63,6 @@ class CreatePhotoEntryForm extends Component {
   clearForm() {
     this.setState({
       caption: "",
-      photoFilename: "",
       photo: null,
     });
   }
@@ -71,7 +74,7 @@ class CreatePhotoEntryForm extends Component {
           <FileInput
             name="photo"
             label="Photo"
-            value={this.state.photoFilename}
+            value={this.state.photo}
             onChange={(e) => this.handleChange(e)}
           />
         </Form.Group>
