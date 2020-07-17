@@ -145,5 +145,5 @@ class FoodEntry(models.Model):
             on_delete=models.CASCADE)
     collection = models.ForeignKey(EntryCollection, related_name='foods', on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
-    tags = models.ManyToManyField(FoodTag)
+    tags = models.ManyToManyField(FoodTag, blank=True)
 

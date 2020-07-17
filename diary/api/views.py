@@ -129,7 +129,7 @@ class FoodEntryViewSet(
     serializer_class = FoodEntrySerializer
 
     def get_queryset(self):
-        return self.request.user.texts.all()
+        return self.request.user.foods.all()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
