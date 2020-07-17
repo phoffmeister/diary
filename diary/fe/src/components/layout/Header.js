@@ -34,7 +34,7 @@ class Header extends Component {
     return (
       <div className="container">
         <Navbar expand="lg" bg="light">
-          <Navbar.Brand href="/">Diary</Navbar.Brand>
+          <Navbar.Brand href="#">Diary</Navbar.Brand>
 
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">

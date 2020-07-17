@@ -5,12 +5,14 @@ import { matchPath } from "react-router-dom";
 import TextEntry from "./entries/TextEntry";
 import DrinkEntry from "./entries/DrinkEntry";
 import PhotoEntry from "./entries/PhotoEntry";
+import FoodEntry from "./entries/FoodEntry";
 import MedicationEntry from "./entries/MedicationEntry";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import CreateTextEntryForm from "./forms/CreateTextEntryForm";
 import CreatePhotoEntryForm from "./forms/CreatePhotoEntryForm";
 import CreateMedicationEntryForm from "./forms/CreateMedicationEntryForm";
+import CreateFoodEntryForm from "./forms/CreateFoodEntryForm";
 import CreateDrinkEntryForm from "./forms/CreateDrinkEntryForm";
 import { getDay } from "../../../actions/day";
 import EntryAccordion from "./EntryAccordion";
@@ -67,6 +69,14 @@ class CollectionDetail extends Component {
             accordionID="2"
             entries={this.props.day.drinks}
             mapper={(e) => <DrinkEntry key={e.id} drink={e} />}
+          />
+          <EntryAccordion
+            title="Food"
+            form={CreateFoodEntryForm}
+            dayID={this.state.dayID}
+            accordionID="4"
+            entries={this.props.day.foods}
+            mapper={(e) => <FoodEntry key={e.id} food={e} />}
           />
           <EntryAccordion
             title="Medication"
