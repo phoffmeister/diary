@@ -42,3 +42,5 @@ admin.site.register(MedicationEntry, MedicationEntryAdmin)
 
 admin.site.register(PhotoEntry, PhotoEntryAdmin)
 
+admin.site.register(FoodEntry)
+admin.site.register(FoodTag)

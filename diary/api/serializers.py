@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import EntryCollection, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry
+from .models import EntryCollection, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry, FoodEntry, FoodTag
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,10 +34,15 @@ class PhotoEntrySerializer(serializers.ModelSerializer):
         model = PhotoEntry
         fields = ('id', 'photo', 'caption', 'collection')
 
+class FoodEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FoodEntry
+        fields = ('id', 'description', 'tags', 'collection')
+
 class DaySerializer(serializers.ModelSerializer):
     class Meta:
         model = EntryCollection
-        fields = ('id', 'date', 'texts', 'drinks', 'medications', 'photos')
+        fields = ('id', 'date', 'texts', 'drinks', 'medications', 'photos', 'foods')
 
     class SimpleTextS(serializers.ModelSerializer):
         class Meta:
@@ -62,8 +67,21 @@ class DaySerializer(serializers.ModelSerializer):
             model = PhotoEntry
             fields = ('id', 'photo', 'caption')
 
+
+    class SimpleFoodEntryS(serializers.ModelSerializer):
+        class SimpleFoodTagS(serializers.ModelSerializer):
+            class Meta:
+                model = FoodTag
+                fields = ('id', 'text')
+        tags = SimpleFoodTagS(many=True, read_only=True)
+
+        class Meta:
+            model = FoodEntry
+            fields = ('id', 'tags', 'description')
+
     texts = SimpleTextS(many=True, read_only=True)
     drinks = SimpleDrinkS(many=True, read_only=True)
     medications = SimpleMedicationS(many=True, read_only=True)
     photos = SimplePhotoEntryS(many=True, read_only=True)
+    foods = SimpleFoodEntryS(many=True, read_only=True)
 

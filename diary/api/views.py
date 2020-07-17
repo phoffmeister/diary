@@ -1,5 +1,5 @@
-from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, EntryCollection
-from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer
+from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, EntryCollection, FoodTag
+from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer, FoodEntrySerializer
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -60,6 +60,15 @@ class DayAPI(
     def get_queryset(self):
         return self.request.user.collections.all()
 
+class FoodTagsAPI(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get(self, request, format=None):
+        tags = [{"id":a.id, "text":a.text} for a in FoodTag.objects.all().order_by('text')]
+        return Response({"tags":tags})
+
 class MedicationOptionsAPI(APIView):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -109,10 +118,24 @@ class EntryCollectionViewSet(
             raise ValidationError('There is already an entry for this date.')
         serializer.save(owner=self.request.user)
 
+class FoodEntryViewSet(
+        mixins.CreateModelMixin,
+        mixins.DestroyModelMixin,
+        viewsets.GenericViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    serializer_class = FoodEntrySerializer
+
+    def get_queryset(self):
+        return self.request.user.texts.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 class TextEntryViewSet(
         mixins.CreateModelMixin,
-        mixins.ListModelMixin,
-        mixins.RetrieveModelMixin,
         mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
@@ -133,8 +156,6 @@ class TextEntryViewSet(
 
 class DrinkEntryViewSet(
         mixins.CreateModelMixin,
-        mixins.ListModelMixin,
-        mixins.RetrieveModelMixin,
         mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
@@ -155,8 +176,6 @@ class DrinkEntryViewSet(
 
 class PhotoEntryViewSet(
         mixins.CreateModelMixin,
-        mixins.ListModelMixin,
-        mixins.RetrieveModelMixin,
         mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [

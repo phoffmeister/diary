@@ -132,3 +132,18 @@ class DrinkEntry(models.Model):
     def __str__(self):
         return str(self.name)
 
+class FoodTag(models.Model):
+    text = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.text
+
+class FoodEntry(models.Model):
+    owner = models.ForeignKey(
+            User,
+            related_name='foods',
+            on_delete=models.CASCADE)
+    collection = models.ForeignKey(EntryCollection, related_name='foods', on_delete=models.CASCADE)
+    description = models.CharField(max_length=255)
+    tags = models.ManyToManyField(FoodTag)
+
