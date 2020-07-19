@@ -16,12 +16,16 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth import login
 
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
 def protected_media(request, path):
     file_name = request.path[request.path.rfind('/'):]
-    photo = get_object_or_404(PhotoEntry, owner=request.user, photo__endswith=file_name)
+    photo = get_object_or_404(
+        PhotoEntry,
+        owner=request.user,
+        photo__endswith=file_name)
     response = HttpResponse(status=200)
     response['Content-Type'] = ''
     response['X-Accel-Redirect'] = '/protected/' + path
@@ -42,12 +46,13 @@ class LoginAPI(KnoxLoginView):
 
 class UserAPI(generics.RetrieveAPIView):
     permission_classes = [
-            permissions.IsAuthenticated,
+        permissions.IsAuthenticated,
     ]
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
+
 
 class DayAPI(
         mixins.RetrieveModelMixin,
@@ -60,14 +65,17 @@ class DayAPI(
     def get_queryset(self):
         return self.request.user.collections.all()
 
+
 class FoodTagsAPI(APIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
 
     def get(self, request, format=None):
-        tags = [{"id":a.id, "text":a.text} for a in FoodTag.objects.all().order_by('text')]
-        return Response({"tags":tags})
+        tags = [{"id": a.id, "text": a.text}
+                for a in FoodTag.objects.all().order_by('text')]
+        return Response({"tags": tags})
+
 
 class MedicationOptionsAPI(APIView):
     permission_classes = [
@@ -75,9 +83,12 @@ class MedicationOptionsAPI(APIView):
     ]
 
     def get(self, request, format=None):
-        amounts = [{"id":a.id, "amount":a.amount} for a in MedicationAmount.objects.all().order_by('amount')]
-        names = [{"id":i.id, "name":i.name } for i in Medication.objects.all().order_by('name')]
-        return Response({"amounts":amounts,"names": names})
+        amounts = [{"id": a.id, "amount": a.amount}
+                   for a in MedicationAmount.objects.all().order_by('amount')]
+        names = [{"id": i.id, "name": i.name}
+                 for i in Medication.objects.all().order_by('name')]
+        return Response({"amounts": amounts, "names": names})
+
 
 class DrinkOptionsAPI(APIView):
     permission_classes = [
@@ -86,15 +97,17 @@ class DrinkOptionsAPI(APIView):
 
     def get(self, request, format=None):
         types = [
-                    {"id":a.id, "name":a.name, "tags":
-                        [
-                            {t.tag_text} for t in a.tag.all()
-                        ]
-                    }
-                    for a in DrinkType.objects.all()
-                ]
-        amounts = [{"id":a.id, "amount":a.amount, "examples":[ex.example for ex in a.examples.all()]} for a in DrinkAmount.objects.all().order_by('amount')]
-        return Response({"amounts":amounts,"types": types})
+            {"id": a.id, "name": a.name, "tags":
+             [
+                 {t.tag_text} for t in a.tag.all()
+             ]
+             }
+            for a in DrinkType.objects.all()
+        ]
+        amounts = [{"id": a.id, "amount": a.amount, "examples": [
+            ex.example for ex in a.examples.all()]} for a in DrinkAmount.objects.all().order_by('amount')]
+        return Response({"amounts": amounts, "types": types})
+
 
 class EntryCollectionViewSet(
         mixins.CreateModelMixin,
@@ -111,11 +124,12 @@ class EntryCollectionViewSet(
 
     def perform_create(self, serializer):
         coll = EntryCollection.objects.filter(
-                date=serializer.validated_data['date'],
-                owner=self.request.user).exists()
+            date=serializer.validated_data['date'],
+            owner=self.request.user).exists()
         if coll:
             raise ValidationError('There is already an entry for this date.')
         serializer.save(owner=self.request.user)
+
 
 class CollectionEntryViewSet(
         mixins.CreateModelMixin,
@@ -127,6 +141,7 @@ class CollectionEntryViewSet(
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 class FoodEntryViewSet(CollectionEntryViewSet):
     serializer_class = FoodEntrySerializer
@@ -148,15 +163,16 @@ class DrinkEntryViewSet(CollectionEntryViewSet):
     def get_queryset(self):
         return self.request.user.drinks.all()
 
+
 class PhotoEntryViewSet(CollectionEntryViewSet):
     serializer_class = PhotoEntrySerializer
 
     def get_queryset(self):
         return self.request.user.photos.all()
 
+
 class MedicationEntryViewSet(CollectionEntryViewSet):
     serializer_class = MedicationEntrySerializer
 
     def get_queryset(self):
         return self.request.user.medications.all()
-

@@ -4,11 +4,12 @@ from django.db import models
 from django.dispatch import receiver
 import os
 
+
 class EntryCollection(models.Model):
     owner = models.ForeignKey(
-            User,
-            related_name='collections',
-            on_delete=models.CASCADE)
+        User,
+        related_name='collections',
+        on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
 
     def hasMedicationEntries(self):
@@ -25,7 +26,11 @@ class EntryCollection(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['date', 'owner'], name='date_owner_unique')
+            models.UniqueConstraint(
+                fields=[
+                    'date',
+                    'owner'],
+                name='date_owner_unique')
         ]
 
     def __str__(self):
@@ -34,10 +39,13 @@ class EntryCollection(models.Model):
 
 class PhotoEntry(models.Model):
     owner = models.ForeignKey(
-            User,
-            related_name='photos',
-            on_delete=models.CASCADE)
-    collection = models.ForeignKey(EntryCollection, related_name='photos', on_delete=models.CASCADE)
+        User,
+        related_name='photos',
+        on_delete=models.CASCADE)
+    collection = models.ForeignKey(
+        EntryCollection,
+        related_name='photos',
+        on_delete=models.CASCADE)
     photo = models.FileField(upload_to='photos', max_length=255)
     caption = models.TextField(blank=True)
 
@@ -65,10 +73,13 @@ class Medication(models.Model):
 
 class MedicationEntry(models.Model):
     owner = models.ForeignKey(
-            User,
-            related_name='medications',
-            on_delete=models.CASCADE)
-    collection = models.ForeignKey(EntryCollection, related_name='medications', on_delete=models.CASCADE)
+        User,
+        related_name='medications',
+        on_delete=models.CASCADE)
+    collection = models.ForeignKey(
+        EntryCollection,
+        related_name='medications',
+        on_delete=models.CASCADE)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
     amount = models.ForeignKey(MedicationAmount, on_delete=models.CASCADE)
     time = models.TimeField()
@@ -79,11 +90,14 @@ class MedicationEntry(models.Model):
 
 class TextEntry(models.Model):
     owner = models.ForeignKey(
-            User,
-            related_name='texts',
-            on_delete=models.CASCADE)
+        User,
+        related_name='texts',
+        on_delete=models.CASCADE)
     text = models.TextField()
-    collection = models.ForeignKey(EntryCollection, related_name='texts', on_delete=models.CASCADE)
+    collection = models.ForeignKey(
+        EntryCollection,
+        related_name='texts',
+        on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Entry from {self.collection.date}: {self.text[:10]}'
@@ -113,7 +127,10 @@ class DrinkAmount(models.Model):
 
 class DrinkAmountExample(models.Model):
     example = models.CharField(max_length=100)
-    drink_amount = models.ForeignKey(DrinkAmount, related_name='examples', on_delete=models.CASCADE)
+    drink_amount = models.ForeignKey(
+        DrinkAmount,
+        related_name='examples',
+        on_delete=models.CASCADE)
 
     def __str__(self):
         return self.example
@@ -121,16 +138,20 @@ class DrinkAmountExample(models.Model):
 
 class DrinkEntry(models.Model):
     owner = models.ForeignKey(
-            User,
-            related_name='drinks',
-            on_delete=models.CASCADE)
+        User,
+        related_name='drinks',
+        on_delete=models.CASCADE)
     name = models.ForeignKey(DrinkType, on_delete=models.CASCADE)
     amount = models.ForeignKey(DrinkAmount, on_delete=models.CASCADE)
-    collection = models.ForeignKey(EntryCollection, related_name='drinks', on_delete=models.CASCADE)
+    collection = models.ForeignKey(
+        EntryCollection,
+        related_name='drinks',
+        on_delete=models.CASCADE)
     time = models.TimeField()
 
     def __str__(self):
         return str(self.name)
+
 
 class FoodTag(models.Model):
     text = models.CharField(max_length=100)
@@ -138,12 +159,15 @@ class FoodTag(models.Model):
     def __str__(self):
         return self.text
 
+
 class FoodEntry(models.Model):
     owner = models.ForeignKey(
-            User,
-            related_name='foods',
-            on_delete=models.CASCADE)
-    collection = models.ForeignKey(EntryCollection, related_name='foods', on_delete=models.CASCADE)
+        User,
+        related_name='foods',
+        on_delete=models.CASCADE)
+    collection = models.ForeignKey(
+        EntryCollection,
+        related_name='foods',
+        on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     tags = models.ManyToManyField(FoodTag, blank=True)
-

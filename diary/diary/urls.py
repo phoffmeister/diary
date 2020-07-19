@@ -20,9 +20,13 @@ import api.views
 
 media_url = None
 if settings.DEBUG:
-    media_url = re_path(r'^media/(?P<path>.*)$', serve, { 'document_root': settings.MEDIA_ROOT, })
+    media_url = re_path(r'^media/(?P<path>.*)$', serve,
+                        {'document_root': settings.MEDIA_ROOT, })
 else:
-    media_url = re_path('^media/(?P<path>.*)$', api.views.protected_media, name='protected_media')
+    media_url = re_path(
+        '^media/(?P<path>.*)$',
+        api.views.protected_media,
+        name='protected_media')
 
 urlpatterns = [
     path('', include('fe.urls')),
