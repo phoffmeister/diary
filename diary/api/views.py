@@ -99,7 +99,6 @@ class DrinkOptionsAPI(APIView):
 class EntryCollectionViewSet(
         mixins.CreateModelMixin,
         mixins.ListModelMixin,
-        mixins.RetrieveModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -118,7 +117,7 @@ class EntryCollectionViewSet(
             raise ValidationError('There is already an entry for this date.')
         serializer.save(owner=self.request.user)
 
-class FoodEntryViewSet(
+class CollectionEntryViewSet(
         mixins.CreateModelMixin,
         mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
@@ -126,93 +125,38 @@ class FoodEntryViewSet(
         permissions.IsAuthenticated,
     ]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+class FoodEntryViewSet(CollectionEntryViewSet):
     serializer_class = FoodEntrySerializer
 
     def get_queryset(self):
         return self.request.user.foods.all()
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
 
-class TextEntryViewSet(
-        mixins.CreateModelMixin,
-        mixins.DestroyModelMixin,
-        viewsets.GenericViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-
+class TextEntryViewSet(CollectionEntryViewSet):
     serializer_class = TextEntrySerializer
 
     def get_queryset(self):
-        queryset = self.request.user.texts.all()
-        collection = self.request.query_params.get('collection', None)
-        if collection:
-            return get_list_or_404(queryset, collection__id=collection)
-        return queryset
+        return self.request.user.texts.all()
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
 
-class DrinkEntryViewSet(
-        mixins.CreateModelMixin,
-        mixins.DestroyModelMixin,
-        viewsets.GenericViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-
+class DrinkEntryViewSet(CollectionEntryViewSet):
     serializer_class = DrinkEntrySerializer
 
     def get_queryset(self):
-        queryset = self.request.user.drinks.all()
-        collection = self.request.query_params.get('collection', None)
-        if collection:
-            return get_list_or_404(queryset, collection__id=collection)
-        return queryset
+        return self.request.user.drinks.all()
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-class PhotoEntryViewSet(
-        mixins.CreateModelMixin,
-        mixins.DestroyModelMixin,
-        viewsets.GenericViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-
+class PhotoEntryViewSet(CollectionEntryViewSet):
     serializer_class = PhotoEntrySerializer
 
     def get_queryset(self):
-        queryset = self.request.user.photos.all()
-        collection = self.request.query_params.get('collection', None)
-        if collection:
-            return get_list_or_404(queryset, collection__id=collection)
-        return queryset
+        return self.request.user.photos.all()
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-class MedicationEntryViewSet(
-        mixins.CreateModelMixin,
-        mixins.ListModelMixin,
-        mixins.RetrieveModelMixin,
-        mixins.DestroyModelMixin,
-        viewsets.GenericViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-
+class MedicationEntryViewSet(CollectionEntryViewSet):
     serializer_class = MedicationEntrySerializer
 
     def get_queryset(self):
-        queryset = self.request.user.medications.all()
-        collection = self.request.query_params.get('collection', None)
-        if collection:
-            return get_list_or_404(queryset, collection__id=collection)
-        return queryset
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        return self.request.user.medications.all()
 
