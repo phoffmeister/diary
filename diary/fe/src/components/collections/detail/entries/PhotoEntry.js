@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import ExifOrientationImg from "react-exif-orientation-img";
 
 class PhotoEntry extends Component {
   handleClick() {
@@ -31,7 +32,7 @@ class PhotoEntry extends Component {
       <Card className="mb-1 p-2">
         <Row>
           <Col>
-            <img
+            <ExifOrientationImg
               className="img-fluid"
               src={"/media/" + this.props.photo.photo}
               alt="no photo"

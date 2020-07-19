@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { createPhoto } from "../../../../actions/photo";
 import { connect } from "react-redux";
+import ExifOrientationImg from "react-exif-orientation-img";
 
 const noop = () => {};
 
@@ -12,7 +13,7 @@ const FileInput = ({ value, onChange = noop, ...rest }) => (
       <div>
         Selected file: {value.name}
         <br />
-        <img width="250px" src={URL.createObjectURL(value)} />
+        <ExifOrientationImg width="250px" src={URL.createObjectURL(value)} />
       </div>
     ) : null}
     <label>
