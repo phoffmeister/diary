@@ -1,6 +1,6 @@
 from rest_framework import routers
 from django.urls import path, include, re_path
-from .views import LoginAPI, UserAPI, EntryCollectionViewSet, TextEntryViewSet, DrinkEntryViewSet, DayAPI, MedicationEntryViewSet, PhotoEntryViewSet, protected_media, MedicationOptionsAPI, DrinkOptionsAPI, FoodTagsAPI, FoodEntryViewSet
+from .views import LoginAPI, UserAPI, EntryCollectionViewSet, TextEntryViewSet, DrinkEntryViewSet, DayAPI, MedicationEntryViewSet, PhotoEntryViewSet, protected_media, MedicationOptionsAPI, DrinkOptionsAPI, FoodTagsAPI, FoodEntryViewSet, HeadacheEntryViewSet
 from knox import views as knox_views
 
 router = routers.DefaultRouter()
@@ -11,6 +11,7 @@ router.register('api/drink', DrinkEntryViewSet, 'drink')
 router.register('api/medication', MedicationEntryViewSet, 'medication')
 router.register('api/photo', PhotoEntryViewSet, 'photo')
 router.register('api/food', FoodEntryViewSet, 'food')
+router.register('api/headache', HeadacheEntryViewSet, 'headache')
 
 urlpatterns = [
     path('', include(router.urls)),

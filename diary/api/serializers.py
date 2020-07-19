@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import EntryCollection, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry, FoodEntry, FoodTag
+from .models import EntryCollection, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry, FoodEntry, FoodTag, HeadacheEntry
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,6 +26,12 @@ class TextEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = TextEntry
         fields = ('id', 'text', 'collection')
+
+
+class HeadacheEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HeadacheEntry
+        fields = ('id', 'severity', 'collection')
 
 
 class DrinkEntrySerializer(serializers.ModelSerializer):

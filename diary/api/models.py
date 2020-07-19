@@ -2,6 +2,8 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.db import models
 from django.dispatch import receiver
+from django.core.exceptions import ValidationError
+from django.utils.deconstruct import deconstructible
 import os
 
 
@@ -35,6 +37,44 @@ class EntryCollection(models.Model):
 
     def __str__(self):
         return f'{str(self.date)} {str(self.owner)} {self.id}'
+
+
+@deconstructible
+class RangeValidator:
+    min_val = 0
+    max_val = 100
+
+    def __init__(self, min_val=None, max_val=None):
+        if min_val is not None:
+            self.min_val = min_val
+        if max_val is not None:
+            self.max_val = max_val
+
+    def __call__(self, value):
+        if value < self.min_val or value > self.max_val:
+            raise ValidationError(
+                f'{self.min_val} < {value} < {self.max_val} is invalid', 'invalid')
+
+    def __eq__(self, other):
+        return (isinstance(other, RangeValidator) and
+                self.min_val == other.min_val and
+                self.max_val == other.max_val)
+
+
+class HeadacheEntry(models.Model):
+    owner = models.ForeignKey(
+        User,
+        related_name='headaches',
+        on_delete=models.CASCADE)
+    collection = models.ForeignKey(
+        EntryCollection,
+        related_name='headaches',
+        on_delete=models.CASCADE)
+    severity = models.IntegerField(
+        validators=[
+            RangeValidator(
+                min_val=0,
+                max_val=10)])
 
 
 class PhotoEntry(models.Model):

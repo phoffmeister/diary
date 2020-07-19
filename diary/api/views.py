@@ -1,5 +1,5 @@
 from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, EntryCollection, FoodTag
-from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer, FoodEntrySerializer
+from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer, FoodEntrySerializer, HeadacheEntrySerializer
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -141,6 +141,13 @@ class CollectionEntryViewSet(
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class HeadacheEntryViewSet(CollectionEntryViewSet):
+    serializer_class = HeadacheEntrySerializer
+
+    def get_queryset(self):
+        return self.request.user.headaches.all()
 
 
 class FoodEntryViewSet(CollectionEntryViewSet):
