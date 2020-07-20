@@ -3,22 +3,22 @@ from .models import *
 
 
 class TextEntryAdmin(admin.ModelAdmin):
-    list_display = ('collection', 'text', 'owner')
-    list_filter = ('collection', 'owner')
+    list_display = ('day', 'text', 'owner')
+    list_filter = ('day', 'owner')
 
 
 class DrinkEntryAdmin(admin.ModelAdmin):
-    list_display = ('collection', 'time', 'name', 'amount', 'owner')
-    list_filter = ('collection', 'name', 'amount', 'owner')
+    list_display = ('day', 'time', 'name', 'amount', 'owner')
+    list_filter = ('day', 'name', 'amount', 'owner')
 
 
 class MedicationEntryAdmin(admin.ModelAdmin):
-    list_display = ('collection', 'time', 'medication', 'amount', 'owner')
-    list_filter = ('collection', 'medication', 'amount', 'owner')
+    list_display = ('day', 'time', 'medication', 'amount', 'owner')
+    list_filter = ('day', 'medication', 'amount', 'owner')
 
 
 class PhotoEntryAdmin(admin.ModelAdmin):
-    list_display = ('collection', 'photo', 'owner')
+    list_display = ('day', 'photo', 'owner')
 
 
 class DrinkTypeAdmin(admin.ModelAdmin):
@@ -28,7 +28,7 @@ class DrinkTypeAdmin(admin.ModelAdmin):
         return "\n".join([t.tag_text for t in obj.tag.all()])
 
 
-admin.site.register(EntryCollection)
+admin.site.register(DayEntry)
 admin.site.register(TextEntry, TextEntryAdmin)
 
 admin.site.register(DrinkEntry, DrinkEntryAdmin)

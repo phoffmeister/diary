@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import EntryCollection, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry, FoodEntry, FoodTag, HeadacheEntry
+from .models import DayEntry, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry, FoodEntry, FoodTag, HeadacheEntry
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,9 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
 
-class EntryCollectionSerializer(serializers.ModelSerializer):
+class SimpleDayEntrySerializer(serializers.ModelSerializer):
     class Meta:
-        model = EntryCollection
+        model = DayEntry
         fields = (
             'id',
             'date',
@@ -25,25 +25,25 @@ class EntryCollectionSerializer(serializers.ModelSerializer):
 class TextEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = TextEntry
-        fields = ('id', 'text', 'collection')
+        fields = ('id', 'text', 'day')
 
 
 class HeadacheEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = HeadacheEntry
-        fields = ('id', 'severity', 'collection')
+        fields = ('id', 'severity', 'day')
 
 
 class DrinkEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = DrinkEntry
-        fields = ('id', 'name', 'amount', 'time', 'collection')
+        fields = ('id', 'name', 'amount', 'time', 'day')
 
 
 class MedicationEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = MedicationEntry
-        fields = ('id', 'medication', 'amount', 'time', 'collection')
+        fields = ('id', 'medication', 'amount', 'time', 'day')
 
 
 class PhotoEntrySerializer(serializers.ModelSerializer):
@@ -51,18 +51,18 @@ class PhotoEntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PhotoEntry
-        fields = ('id', 'photo', 'caption', 'collection')
+        fields = ('id', 'photo', 'caption', 'day')
 
 
 class FoodEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodEntry
-        fields = ('id', 'description', 'tags', 'collection')
+        fields = ('id', 'description', 'tags', 'day')
 
 
-class DaySerializer(serializers.ModelSerializer):
+class DetailDayEntrySerializer(serializers.ModelSerializer):
     class Meta:
-        model = EntryCollection
+        model = DayEntry
         fields = (
             'id',
             'date',
@@ -70,12 +70,18 @@ class DaySerializer(serializers.ModelSerializer):
             'drinks',
             'medications',
             'photos',
+            'headaches',
             'foods')
 
     class SimpleTextS(serializers.ModelSerializer):
         class Meta:
             model = TextEntry
             fields = ('id', 'text')
+
+    class SimpleHeadacheS(serializers.ModelSerializer):
+        class Meta:
+            model = HeadacheEntry
+            fields = ('id', 'severity')
 
     class SimpleDrinkS(serializers.ModelSerializer):
         class Meta:

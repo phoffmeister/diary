@@ -1,11 +1,10 @@
 from rest_framework import routers
 from django.urls import path, include, re_path
-from .views import LoginAPI, UserAPI, EntryCollectionViewSet, TextEntryViewSet, DrinkEntryViewSet, DayAPI, MedicationEntryViewSet, PhotoEntryViewSet, protected_media, MedicationOptionsAPI, DrinkOptionsAPI, FoodTagsAPI, FoodEntryViewSet, HeadacheEntryViewSet
+from .views import LoginAPI, UserAPI, DayEntryViewSet, TextEntryViewSet, DrinkEntryViewSet, MedicationEntryViewSet, PhotoEntryViewSet, protected_media, MedicationOptionsAPI, DrinkOptionsAPI, FoodTagsAPI, FoodEntryViewSet, HeadacheEntryViewSet
 from knox import views as knox_views
 
 router = routers.DefaultRouter()
-router.register('api/collection', EntryCollectionViewSet, 'collection')
-router.register('api/day', DayAPI, 'day')
+router.register('api/day', DayEntryViewSet, 'day')
 router.register('api/text', TextEntryViewSet, 'text')
 router.register('api/drink', DrinkEntryViewSet, 'drink')
 router.register('api/medication', MedicationEntryViewSet, 'medication')

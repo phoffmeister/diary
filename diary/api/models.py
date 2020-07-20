@@ -7,24 +7,24 @@ from django.utils.deconstruct import deconstructible
 import os
 
 
-class EntryCollection(models.Model):
+class DayEntry(models.Model):
     owner = models.ForeignKey(
         User,
-        related_name='collections',
+        related_name='days',
         on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
 
     def hasMedicationEntries(self):
-        return MedicationEntry.objects.filter(collection=self).count() > 0
+        return MedicationEntry.objects.filter(day=self).count() > 0
 
     def hasPhotoEntries(self):
-        return PhotoEntry.objects.filter(collection=self).count() > 0
+        return PhotoEntry.objects.filter(day=self).count() > 0
 
     def hasDrinkEntries(self):
-        return DrinkEntry.objects.filter(collection=self).count() > 0
+        return DrinkEntry.objects.filter(day=self).count() > 0
 
     def hasTextEntries(self):
-        return TextEntry.objects.filter(collection=self).count() > 0
+        return TextEntry.objects.filter(day=self).count() > 0
 
     class Meta:
         constraints = [
@@ -66,8 +66,8 @@ class HeadacheEntry(models.Model):
         User,
         related_name='headaches',
         on_delete=models.CASCADE)
-    collection = models.ForeignKey(
-        EntryCollection,
+    day = models.ForeignKey(
+        DayEntry,
         related_name='headaches',
         on_delete=models.CASCADE)
     severity = models.IntegerField(
@@ -82,8 +82,8 @@ class PhotoEntry(models.Model):
         User,
         related_name='photos',
         on_delete=models.CASCADE)
-    collection = models.ForeignKey(
-        EntryCollection,
+    day = models.ForeignKey(
+        DayEntry,
         related_name='photos',
         on_delete=models.CASCADE)
     photo = models.FileField(upload_to='photos', max_length=255)
@@ -116,8 +116,8 @@ class MedicationEntry(models.Model):
         User,
         related_name='medications',
         on_delete=models.CASCADE)
-    collection = models.ForeignKey(
-        EntryCollection,
+    day = models.ForeignKey(
+        DayEntry,
         related_name='medications',
         on_delete=models.CASCADE)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
@@ -134,13 +134,13 @@ class TextEntry(models.Model):
         related_name='texts',
         on_delete=models.CASCADE)
     text = models.TextField()
-    collection = models.ForeignKey(
-        EntryCollection,
+    day = models.ForeignKey(
+        DayEntry,
         related_name='texts',
         on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Entry from {self.collection.date}: {self.text[:10]}'
+        return f'Entry from {self.day.date}: {self.text[:10]}'
 
 
 class DrinkTag(models.Model):
@@ -183,8 +183,8 @@ class DrinkEntry(models.Model):
         on_delete=models.CASCADE)
     name = models.ForeignKey(DrinkType, on_delete=models.CASCADE)
     amount = models.ForeignKey(DrinkAmount, on_delete=models.CASCADE)
-    collection = models.ForeignKey(
-        EntryCollection,
+    day = models.ForeignKey(
+        DayEntry,
         related_name='drinks',
         on_delete=models.CASCADE)
     time = models.TimeField()
@@ -205,8 +205,8 @@ class FoodEntry(models.Model):
         User,
         related_name='foods',
         on_delete=models.CASCADE)
-    collection = models.ForeignKey(
-        EntryCollection,
+    day = models.ForeignKey(
+        DayEntry,
         related_name='foods',
         on_delete=models.CASCADE)
     description = models.CharField(max_length=255)

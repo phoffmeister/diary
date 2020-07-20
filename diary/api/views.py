@@ -1,5 +1,5 @@
-from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, EntryCollection, FoodTag
-from .serializers import UserSerializer, EntryCollectionSerializer, TextEntrySerializer, DrinkEntrySerializer, DaySerializer, MedicationEntrySerializer, PhotoEntrySerializer, FoodEntrySerializer, HeadacheEntrySerializer
+from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, DayEntry, FoodTag
+from .serializers import UserSerializer, DetailDayEntrySerializer, TextEntrySerializer, DrinkEntrySerializer, SimpleDayEntrySerializer, MedicationEntrySerializer, PhotoEntrySerializer, FoodEntrySerializer, HeadacheEntrySerializer
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -53,17 +53,33 @@ class UserAPI(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-
-class DayAPI(
+class DayEntryViewSet(
         mixins.RetrieveModelMixin,
+        mixins.CreateModelMixin,
+        mixins.ListModelMixin,
         viewsets.GenericViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    serializer_class = DaySerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return SimpleDayEntrySerializer
+        elif self.action == 'create':
+            return SimpleDayEntrySerializer
+        else:
+            return DetailDayEntrySerializer
 
     def get_queryset(self):
-        return self.request.user.collections.all()
+        return self.request.user.days.all().order_by('-date')
+
+    def perform_create(self, serializer):
+        day = DayEntry.objects.filter(
+            date=serializer.validated_data['date'],
+            owner=self.request.user).exists()
+        if day:
+            raise ValidationError('There is already an entry for this date.')
+        serializer.save(owner=self.request.user)
 
 
 class FoodTagsAPI(APIView):
@@ -109,29 +125,7 @@ class DrinkOptionsAPI(APIView):
         return Response({"amounts": amounts, "types": types})
 
 
-class EntryCollectionViewSet(
-        mixins.CreateModelMixin,
-        mixins.ListModelMixin,
-        viewsets.GenericViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-
-    serializer_class = EntryCollectionSerializer
-
-    def get_queryset(self):
-        return self.request.user.collections.all().order_by('-date')
-
-    def perform_create(self, serializer):
-        coll = EntryCollection.objects.filter(
-            date=serializer.validated_data['date'],
-            owner=self.request.user).exists()
-        if coll:
-            raise ValidationError('There is already an entry for this date.')
-        serializer.save(owner=self.request.user)
-
-
-class CollectionEntryViewSet(
+class EntryViewSet(
         mixins.CreateModelMixin,
         mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
@@ -143,42 +137,42 @@ class CollectionEntryViewSet(
         serializer.save(owner=self.request.user)
 
 
-class HeadacheEntryViewSet(CollectionEntryViewSet):
+class HeadacheEntryViewSet(EntryViewSet):
     serializer_class = HeadacheEntrySerializer
 
     def get_queryset(self):
         return self.request.user.headaches.all()
 
 
-class FoodEntryViewSet(CollectionEntryViewSet):
+class FoodEntryViewSet(EntryViewSet):
     serializer_class = FoodEntrySerializer
 
     def get_queryset(self):
         return self.request.user.foods.all()
 
 
-class TextEntryViewSet(CollectionEntryViewSet):
+class TextEntryViewSet(EntryViewSet):
     serializer_class = TextEntrySerializer
 
     def get_queryset(self):
         return self.request.user.texts.all()
 
 
-class DrinkEntryViewSet(CollectionEntryViewSet):
+class DrinkEntryViewSet(EntryViewSet):
     serializer_class = DrinkEntrySerializer
 
     def get_queryset(self):
         return self.request.user.drinks.all()
 
 
-class PhotoEntryViewSet(CollectionEntryViewSet):
+class PhotoEntryViewSet(EntryViewSet):
     serializer_class = PhotoEntrySerializer
 
     def get_queryset(self):
         return self.request.user.photos.all()
 
 
-class MedicationEntryViewSet(CollectionEntryViewSet):
+class MedicationEntryViewSet(EntryViewSet):
     serializer_class = MedicationEntrySerializer
 
     def get_queryset(self):
