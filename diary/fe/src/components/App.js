@@ -1,5 +1,5 @@
-import CollectionList from "./collections/list/CollectionList";
-import CollectionDetail from "./collections/detail/CollectionDetail";
+import DayList from "./day/list/DayList";
+import DayDetail from "./day/detail/DayDetail";
 import Alerts from "./common/Alerts";
 import Header from "./layout/Header";
 import Login from "./auth/Login";
@@ -38,8 +38,8 @@ export default class App extends Component {
             <Header />
             <Alerts />
             <Switch>
-              <PrivateRoute exact path="/" component={CollectionList} />
-              <PrivateRoute path="/day/" component={CollectionDetail} />
+              <PrivateRoute exact path="/" component={DayList} />
+              <PrivateRoute path="/day/" component={DayDetail} />
               <Route exact path="/login" component={Login} />
             </Switch>
           </Router>

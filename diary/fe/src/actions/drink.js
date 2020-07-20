@@ -25,7 +25,7 @@ export const createDrink = (drinkEntry, successCallback) => (
     .post("/api/drink/", drinkEntry, tokenConfig(getState))
     .then((res) => {
       axios
-        .get(`/api/day/${res.data.collection}/`, tokenConfig(getState))
+        .get(`/api/day/${res.data.day}/`, tokenConfig(getState))
         .then((res) => {
           dispatch({
             type: GET_DAY,

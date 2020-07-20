@@ -18,7 +18,7 @@ class CreateFoodEntryForm extends Component {
       {
         description: this.state.description,
         tags: this.state.tags,
-        collection: this.props.dayID,
+        day: this.props.dayID,
       },
       () => this.clearForm()
     );

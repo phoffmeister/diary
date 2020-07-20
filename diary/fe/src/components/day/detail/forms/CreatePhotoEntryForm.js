@@ -44,7 +44,7 @@ class CreatePhotoEntryForm extends Component {
     if (this.state.photo === null) return;
     const formData = new FormData();
     formData.append("photo", this.state.photo);
-    formData.append("collection", this.props.dayID);
+    formData.append("day", this.props.dayID);
     formData.append("caption", this.state.caption);
     this.props.createPhoto(formData, () => this.clearForm());
   }

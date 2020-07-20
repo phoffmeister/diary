@@ -35,7 +35,6 @@ class Header extends Component {
       <div className="container">
         <Navbar expand="lg" bg="light">
           <Navbar.Brand href="#">Diary</Navbar.Brand>
-
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             {isAuthenticated ? authLinks : guestLinks}

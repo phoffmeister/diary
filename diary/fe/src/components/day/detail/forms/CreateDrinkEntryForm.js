@@ -21,7 +21,7 @@ class CreateTextEntryForm extends Component {
       {
         name: this.state.drinkTypeId,
         amount: this.state.drinkAmountId,
-        collection: this.props.dayID,
+        day: this.props.dayID,
         time: this.state.time,
       },
       () => this.clearForm()

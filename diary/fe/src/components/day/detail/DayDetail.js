@@ -17,7 +17,7 @@ import CreateDrinkEntryForm from "./forms/CreateDrinkEntryForm";
 import { getDay } from "../../../actions/day";
 import EntryAccordion from "./EntryAccordion";
 
-class CollectionDetail extends Component {
+class DayDetail extends Component {
   static propTypes = {
     day: PropTypes.object.isRequired,
   };
@@ -92,9 +92,9 @@ class CollectionDetail extends Component {
   }
 }
 const mapStateToProps = (state) => ({
-  day: state.day.day,
+  day: state.day.dayDetail,
 });
 
 export default connect(mapStateToProps, {
   getDay,
-})(CollectionDetail);
+})(DayDetail);

@@ -15,7 +15,7 @@ class CreateTextEntryForm extends Component {
   handleClick(event) {
     this.props.createText(
       {
-        collection: this.props.dayID,
+        day: this.props.dayID,
         text: this.state.text,
       },
       () => this.clearForm()

@@ -27,7 +27,7 @@ export const createMedication = (medicationEntry, successCallback) => (
     .post("/api/medication/", medicationEntry, tokenConfig(getState))
     .then((res) => {
       axios
-        .get(`/api/day/${res.data.collection}/`, tokenConfig(getState))
+        .get(`/api/day/${res.data.day}/`, tokenConfig(getState))
         .then((res) => {
           dispatch({
             type: GET_DAY,

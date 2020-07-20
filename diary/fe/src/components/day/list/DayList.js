@@ -16,9 +16,9 @@ import {
   faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { getCollections, createCollection } from "../../../actions/collections";
+import { getAllDays, createDay } from "../../../actions/day";
 
-class CollectionListRow extends Component {
+class DayListRow extends Component {
   render() {
     const centerStyle = { textAlign: "center" };
     return (
@@ -51,7 +51,7 @@ class CollectionListRow extends Component {
   }
 }
 
-class CollectionList extends Component {
+class DayList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,11 +59,11 @@ class CollectionList extends Component {
     };
   }
   static propTypes = {
-    collections: PropTypes.array.isRequired,
+    days: PropTypes.array.isRequired,
   };
 
   componentDidMount() {
-    this.props.getCollections();
+    this.props.getAllDays();
   }
 
   handleChange(event) {
@@ -73,7 +73,7 @@ class CollectionList extends Component {
   }
 
   handleClick(e) {
-    this.props.createCollection({
+    this.props.createDay({
       date: this.state.date,
     });
     e.preventDefault();
@@ -134,8 +134,8 @@ class CollectionList extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.collections.map((col) => (
-              <CollectionListRow key={col.id} data={col} />
+            {this.props.days.map((col) => (
+              <DayListRow key={col.id} data={col} />
             ))}
           </tbody>
         </Table>
@@ -145,9 +145,7 @@ class CollectionList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  collections: state.collections.collections,
+  days: state.day.dayList,
 });
 
-export default connect(mapStateToProps, { getCollections, createCollection })(
-  CollectionList
-);
+export default connect(mapStateToProps, { getAllDays, createDay })(DayList);

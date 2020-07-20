@@ -25,7 +25,7 @@ class CreateMedicationEntryForm extends Component {
         time: this.state.time,
         medication: this.state.medNameId,
         amount: this.state.medAmountId,
-        collection: this.props.dayID,
+        day: this.props.dayID,
       },
       () => this.clearForm()
     );
