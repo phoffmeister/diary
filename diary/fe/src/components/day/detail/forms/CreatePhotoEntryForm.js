@@ -3,17 +3,27 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { createPhoto } from "../../../../actions/photo";
 import { connect } from "react-redux";
-import ExifOrientationImg from "react-exif-orientation-img";
 
 const noop = () => {};
 
-const FileInput = ({ value, onChange = noop, ...rest }) => (
+const FileInput = ({
+  value,
+  onChange = noop,
+  onClick = noop,
+  rotation,
+  ...rest
+}) => (
   <div>
     {value !== null ? (
       <div>
         Selected file: {value.name}
         <br />
-        <ExifOrientationImg width="250px" src={URL.createObjectURL(value)} />
+        <img
+          onClick={() => onClick()}
+          style={{ transform: `rotate(${rotation}deg)` }}
+          width="250px"
+          src={URL.createObjectURL(value)}
+        />
       </div>
     ) : null}
     <label>
@@ -36,6 +46,7 @@ class CreatePhotoEntryForm extends Component {
     this.state = {
       photo: null,
       caption: "",
+      rotation: 0,
     };
   }
 
@@ -46,7 +57,18 @@ class CreatePhotoEntryForm extends Component {
     formData.append("photo", this.state.photo);
     formData.append("day", this.props.dayID);
     formData.append("caption", this.state.caption);
+    if (this.state.rotation != 0) {
+      formData.append("rotation", 360 - this.state.rotation);
+    }
     this.props.createPhoto(formData, () => this.clearForm());
+  }
+
+  handleImageClick() {
+    console.log("image clicked");
+    const newRotation = (this.state.rotation + 90) % 360;
+    this.setState({
+      rotation: newRotation,
+    });
   }
 
   handleChange(event) {
@@ -65,6 +87,7 @@ class CreatePhotoEntryForm extends Component {
     this.setState({
       caption: "",
       photo: null,
+      rotation: 0,
     });
   }
 
@@ -76,6 +99,8 @@ class CreatePhotoEntryForm extends Component {
             name="photo"
             label="Photo"
             value={this.state.photo}
+            rotation={this.state.rotation}
+            onClick={() => this.handleImageClick()}
             onChange={(e) => this.handleChange(e)}
           />
         </Form.Group>
