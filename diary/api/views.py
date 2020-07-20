@@ -15,6 +15,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from django.contrib.auth import login
+from .helpers import rotate_image
 
 
 @api_view(['GET'])
@@ -52,6 +53,7 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
 
 class DayEntryViewSet(
         mixins.RetrieveModelMixin,
@@ -170,6 +172,14 @@ class PhotoEntryViewSet(EntryViewSet):
 
     def get_queryset(self):
         return self.request.user.photos.all()
+
+    def perform_create(self, serializer):
+        instance = serializer.save(owner=self.request.user)
+        rotation = int(self.request.data.get('rotation', "0"))
+        if rotation:
+            if rotation % 90 != 0:
+                raise ValidationError('rotation must be a multiple of 90')
+            rotate_image(instance.photo.file.name, rotation)
 
 
 class MedicationEntryViewSet(EntryViewSet):
