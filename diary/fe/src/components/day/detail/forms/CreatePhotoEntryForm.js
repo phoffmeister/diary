@@ -79,6 +79,7 @@ class CreatePhotoEntryForm extends Component {
     } else if (event.target.name == "photo") {
       this.setState({
         photo: event.target.files[0],
+        rotation: 0,
       });
     }
   }
