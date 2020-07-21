@@ -6,6 +6,7 @@ import TextEntry from "./entries/TextEntry";
 import DrinkEntry from "./entries/DrinkEntry";
 import PhotoEntry from "./entries/PhotoEntry";
 import FoodEntry from "./entries/FoodEntry";
+import HeadacheEntry from "./entries/HeadacheEntry";
 import MedicationEntry from "./entries/MedicationEntry";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
@@ -14,6 +15,7 @@ import CreatePhotoEntryForm from "./forms/CreatePhotoEntryForm";
 import CreateMedicationEntryForm from "./forms/CreateMedicationEntryForm";
 import CreateFoodEntryForm from "./forms/CreateFoodEntryForm";
 import CreateDrinkEntryForm from "./forms/CreateDrinkEntryForm";
+import CreateHeadacheEntryForm from "./forms/CreateHeadacheEntryForm";
 import { getDay } from "../../../actions/day";
 import EntryAccordion from "./EntryAccordion";
 
@@ -85,6 +87,14 @@ class DayDetail extends Component {
             accordionID="3"
             entries={this.props.day.medications}
             mapper={(e) => <MedicationEntry key={e.id} medication={e} />}
+          />
+          <EntryAccordion
+            title="Headache"
+            form={CreateHeadacheEntryForm}
+            dayID={this.state.dayID}
+            accordionID="5"
+            entries={this.props.day.headaches}
+            mapper={(e) => <HeadacheEntry key={e.id} headache={e} />}
           />
         </Accordion>
       </div>

@@ -7,6 +7,7 @@ import {
   DELETE_PHOTO_SUCCESS,
   DELETE_DRINK_SUCCESS,
   DELETE_FOOD_SUCCESS,
+  DELETE_HEADACHE_SUCCESS,
   DELETE_MEDICATION_SUCCESS,
   CREATE_DAY,
 } from "../actions/types";
@@ -20,6 +21,7 @@ const initialState = {
     drinks: [],
     photos: [],
     foods: [],
+    headaches: [],
   },
   dayList: [],
 };
@@ -53,6 +55,16 @@ export default function (state = initialState, action) {
         dayDetail: {
           ...state.dayDetail,
           medications: state.dayDetail.medications.filter(
+            (e) => e.id != action.payload
+          ),
+        },
+      };
+    case DELETE_HEADACHE_SUCCESS:
+      return {
+        ...state,
+        dayDetail: {
+          ...state.dayDetail,
+          headaches: state.dayDetail.headaches.filter(
             (e) => e.id != action.payload
           ),
         },
@@ -106,6 +118,7 @@ export default function (state = initialState, action) {
           drinks: [],
           photos: [],
           foods: [],
+          headaches: [],
         },
         dayList: action.payload,
       };
