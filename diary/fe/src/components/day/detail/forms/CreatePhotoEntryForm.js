@@ -18,12 +18,24 @@ const FileInput = ({
       <div>
         Selected file: {value.name}
         <br />
-        <img
-          onClick={() => onClick()}
-          style={{ transform: `rotate(${rotation}deg)` }}
-          width="250px"
-          src={URL.createObjectURL(value)}
-        />
+        <div
+          style={{
+            display: "table-cell",
+            verticalAlign: "middle",
+            textAlign: "center",
+            height: "250px",
+            width: "250px",
+          }}>
+          <img
+            onClick={() => onClick()}
+            style={{
+              transform: `rotate(${rotation}deg)`,
+              maxWidth: "250px",
+              maxHeight: "250px",
+            }}
+            src={URL.createObjectURL(value)}
+          />
+        </div>
       </div>
     ) : null}
     <label>
