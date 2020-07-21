@@ -14,6 +14,8 @@ import {
   faCapsules,
   faCocktail,
   faCamera,
+  faUtensils,
+  faDizzy,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { getAllDays, createDay } from "../../../actions/day";
@@ -44,6 +46,16 @@ class DayListRow extends Component {
         <td style={centerStyle}>
           {this.props.data.hasPhotoEntries ? (
             <FontAwesomeIcon key="hasPhotoEntries" icon={faCamera} />
+          ) : null}
+        </td>
+        <td style={centerStyle}>
+          {this.props.data.hasFoodEntries ? (
+            <FontAwesomeIcon key="hasFoodEntries" icon={faUtensils} />
+          ) : null}
+        </td>
+        <td style={centerStyle}>
+          {this.props.data.hasHeadacheEntries ? (
+            <FontAwesomeIcon key="hasHeadacheEntries" icon={faDizzy} />
           ) : null}
         </td>
       </tr>
@@ -130,6 +142,12 @@ class DayList extends Component {
               </th>
               <th style={centerStyle}>
                 <FontAwesomeIcon key="hasMedicationEntries" icon={faCamera} />
+              </th>
+              <th style={centerStyle}>
+                <FontAwesomeIcon key="hasFoodEntries" icon={faUtensils} />
+              </th>
+              <th style={centerStyle}>
+                <FontAwesomeIcon key="hasHeadacheEntries" icon={faDizzy} />
               </th>
             </tr>
           </thead>

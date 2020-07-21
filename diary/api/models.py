@@ -17,6 +17,12 @@ class DayEntry(models.Model):
     def hasMedicationEntries(self):
         return MedicationEntry.objects.filter(day=self).count() > 0
 
+    def hasFoodEntries(self):
+        return FoodEntry.objects.filter(day=self).count() > 0
+
+    def hasHeadacheEntries(self):
+        return HeadacheEntry.objects.filter(day=self).count() > 0
+
     def hasPhotoEntries(self):
         return PhotoEntry.objects.filter(day=self).count() > 0
 

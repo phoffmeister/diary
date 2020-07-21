@@ -18,6 +18,8 @@ class SimpleDayEntrySerializer(serializers.ModelSerializer):
             'date',
             'hasTextEntries',
             'hasMedicationEntries',
+            'hasFoodEntries',
+            'hasHeadacheEntries',
             'hasDrinkEntries',
             'hasPhotoEntries')
 
