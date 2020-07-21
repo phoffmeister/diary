@@ -61,6 +61,13 @@ class RangeValidator:
                 self.max_val == other.max_val)
 
 
+class HeadacheTag(models.Model):
+    text = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.text
+
+
 class HeadacheEntry(models.Model):
     owner = models.ForeignKey(
         User,
@@ -75,6 +82,7 @@ class HeadacheEntry(models.Model):
             RangeValidator(
                 min_val=0,
                 max_val=10)])
+    tags = models.ManyToManyField(HeadacheTag, blank=True)
 
 
 class PhotoEntry(models.Model):
@@ -211,3 +219,4 @@ class FoodEntry(models.Model):
         on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     tags = models.ManyToManyField(FoodTag, blank=True)
+

@@ -1,4 +1,4 @@
-from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, DayEntry, FoodTag
+from .models import PhotoEntry, MedicationAmount, Medication, DrinkType, DrinkAmount, DayEntry, FoodTag, HeadacheTag
 from .serializers import UserSerializer, DetailDayEntrySerializer, TextEntrySerializer, DrinkEntrySerializer, SimpleDayEntrySerializer, MedicationEntrySerializer, PhotoEntrySerializer, FoodEntrySerializer, HeadacheEntrySerializer
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -92,6 +92,17 @@ class FoodTagsAPI(APIView):
     def get(self, request, format=None):
         tags = [{"id": a.id, "text": a.text}
                 for a in FoodTag.objects.all().order_by('text')]
+        return Response({"tags": tags})
+
+
+class HeadacheTagsAPI(APIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get(self, request, format=None):
+        tags = [{"id": a.id, "text": a.text}
+                for a in HeadacheTag.objects.all().order_by('text')]
         return Response({"tags": tags})
 
 

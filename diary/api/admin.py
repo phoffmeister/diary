@@ -46,3 +46,7 @@ admin.site.register(PhotoEntry, PhotoEntryAdmin)
 
 admin.site.register(FoodEntry)
 admin.site.register(FoodTag)
+
+admin.site.register(HeadacheEntry)
+admin.site.register(HeadacheTag)
+

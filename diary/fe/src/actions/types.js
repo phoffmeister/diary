@@ -3,6 +3,7 @@ export const GET_ALL_DAYS = "GET_ALL_DAYS";
 export const GET_MEDICATION_OPTS = "GET_MEDICATION_OPTS";
 export const GET_DRINK_OPTS = "GET_DRINK_OPTS";
 export const GET_FOOD_TAGS = "GET_FOOD_TAGS";
+export const GET_HEADACHE_TAGS = "GET_HEADACHE_TAGS";
 
 export const CREATE_DAY = "CREATE_DAY";
 export const CREATE_TEXT_SUCCESS = "CREATE_TEXT_SUCCESS";

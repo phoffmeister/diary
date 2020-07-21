@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import DayEntry, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry, FoodEntry, FoodTag, HeadacheEntry
+from .models import DayEntry, TextEntry, DrinkEntry, MedicationEntry, PhotoEntry, FoodEntry, FoodTag, HeadacheEntry, HeadacheTag
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class TextEntrySerializer(serializers.ModelSerializer):
 class HeadacheEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = HeadacheEntry
-        fields = ('id', 'severity', 'day')
+        fields = ('id', 'severity', 'day', 'tags')
 
 
 class DrinkEntrySerializer(serializers.ModelSerializer):
@@ -79,9 +79,14 @@ class DetailDayEntrySerializer(serializers.ModelSerializer):
             fields = ('id', 'text')
 
     class SimpleHeadacheS(serializers.ModelSerializer):
+        class SimpleHeadacheTagS(serializers.ModelSerializer):
+            class Meta:
+                model = HeadacheTag
+                fields = ('id', 'text')
+        tags = SimpleHeadacheTagS(many=True, read_only=True)
         class Meta:
             model = HeadacheEntry
-            fields = ('id', 'severity')
+            fields = ('id', 'severity', 'tags')
 
     class SimpleDrinkS(serializers.ModelSerializer):
         class Meta:
@@ -118,3 +123,5 @@ class DetailDayEntrySerializer(serializers.ModelSerializer):
     medications = SimpleMedicationS(many=True, read_only=True)
     photos = SimplePhotoEntryS(many=True, read_only=True)
     foods = SimpleFoodEntryS(many=True, read_only=True)
+    headaches = SimpleHeadacheS(many=True, read_only=True)
+
