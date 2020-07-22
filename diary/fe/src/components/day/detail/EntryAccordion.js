@@ -31,6 +31,7 @@ function ContextAwareToggle({ children, eventKey, callback, as }) {
 
 export default function EntryAccordion(props) {
   const EntryFrom = props.form;
+  const Children = props.children;
   return (
     <Card>
       <ContextAwareToggle as={Card.Header} eventKey={props.accordionID}>
@@ -38,7 +39,10 @@ export default function EntryAccordion(props) {
       </ContextAwareToggle>
       <Accordion.Collapse eventKey={props.accordionID}>
         <Fragment>
-          <Card.Body>{props.entries.map(props.mapper)}</Card.Body>
+          <Card.Body>
+            {props.entries.map(props.mapper)}
+            {props.children ? <Children entries={props.entries} /> : null}
+          </Card.Body>
           <Card.Body>
             <Card.Title>Create New {props.title} Entry</Card.Title>
             <EntryFrom dayID={props.dayID} />
