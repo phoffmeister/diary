@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { matchPath } from "react-router-dom";
 import TextEntry from "./entries/TextEntry";
 import DrinkEntry from "./entries/DrinkEntry";
+import DrinkStats from "./entries/DrinkStats";
 import PhotoEntry from "./entries/PhotoEntry";
 import FoodEntry from "./entries/FoodEntry";
 import HeadacheEntry from "./entries/HeadacheEntry";
@@ -71,6 +72,7 @@ class DayDetail extends Component {
             accordionID="2"
             entries={this.props.day.drinks}
             mapper={(e) => <DrinkEntry key={e.id} drink={e} />}
+            children={DrinkStats}
           />
           <EntryAccordion
             title="Food"
